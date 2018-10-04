@@ -50,10 +50,21 @@ const MOCK_ORG_PROFILE = {
   }
 };
 
-const MOCK_APPLICATION = {};
+const MOCK_POSITION = {
+  id: faker.random.uuid(),
+  org_id: faker.random.uuid(),
+  title: faker.lorem.sentence(),
+  description: faker.lorem.paragraph()
+};
 
-const MOCK_POSITION = {};
-
+const MOCK_APPLICATION = {
+  id: faker.random.uuid(),
+  indProf_id: faker.random.uuid(),
+  pos_id: faker.random.uuid(),
+  date: faker.date.recent(),
+  message: faker.lorem.paragraph(),
+  status: faker.random.number()
+};
 
 
 function getIndividualProfile() {
@@ -65,6 +76,18 @@ function getIndividualProfile() {
 function getOrganizationProfile() {
   
   return MOCK_ORG_PROFILE;
+  
+}
+
+function getPosition() {
+  
+  return MOCK_POSITION;
+  
+}
+
+function getApplication() {
+  
+  return MOCK_APPLICATION;
   
 }
 
@@ -108,5 +131,7 @@ module.exports = {
   getIndividualProfile,
   getOrganizationProfile,
   generatePositions,
-  generateActivities
+  generateActivities,
+  getPosition,
+  getApplication
 };

@@ -5,15 +5,14 @@
 
 // Load testing packges
 const chai = require('chai');
-const chaiHttp = require('chai-http');
 
-chai.use(chaiHttp);
 
 // Simplify expect functions
 const expect = chai.expect;
 
 const { getIndividualProfile, getOrganizationProfile,
-        generatePositions, generateActivities} = require('../server/mockData');
+        generatePositions, generateActivities,
+        getPosition, getApplication} = require('../server/mockData');
 
 // INDIVIDUAL PROFILE DATA
 
@@ -174,8 +173,6 @@ describe("Organization Profile Data", function() {
     
     const orgProfile = getOrganizationProfile();
     
-    console.log(orgProfile);
-    
     it('Should be an object', function() {
       expect(orgProfile).to.be.a('object');
     });
@@ -210,6 +207,74 @@ describe("Organization Profile Data", function() {
         expect(orgProfile.commLevels.skills).to.be.a('string');
         expect(orgProfile.commLevels.network).to.be.a('boolean');
         expect(orgProfile.commLevels.money).to.be.a('number');
+    });
+  });
+});
+
+// POSITION DATA
+
+describe('Position Data', function() {
+  
+  // Test how we retrieve position data
+  describe('getPosition()', function() {
+    
+    it('Should exist', function() {
+      expect(getPosition).to.not.be.null;
+    });
+  });
+
+  // Test the Position Data object    
+  describe('The Position Data object', function() {
+  
+    const position = getPosition();
+    
+    it('Should return an object', function() {
+      expect(position).to.be.a('object');
+    });
+    
+    const requiredKeys = ['id', 'org_id', 'title', 'description'];
+    
+    it('Should have the correct structure', function() {
+      expect(position).to.include.keys(requiredKeys);
+      requiredKeys.forEach(function(key) {
+        expect(position[key]).to.be.a('string');
+      });
+    });
+  });
+});
+    
+describe('Application data', function() {
+  
+  // Test how we retrieve application data
+  describe('getApplication()', function() {
+    
+    it('Should exist', function() {
+      expect(getApplication).to.not.be.null;
+    });
+  });
+  
+  // Test the Application Data object
+  describe('The Application Data object', function() {
+  
+    const application = getApplication();
+    
+    it('Should return an object', function() {
+      expect(application).to.be.a('object');
+    });
+    
+    
+    it('Should have the correct structure', function() {
+    
+      const requiredKeys = ['id', 'indProf_id', 'pos_id', 'date',
+                            'message', 'status'];
+
+      expect(application).to.include.keys(requiredKeys);
+        expect(application.id).to.be.a('string');
+        expect(application.indProf_id).to.be.a('string');
+        expect(application.pos_id).to.be.a('string');
+        expect(application.date).to.be.a('date');
+        expect(application.message).to.be.a('string');
+        expect(application.status).to.be.a('number');
     });
   });
 });
