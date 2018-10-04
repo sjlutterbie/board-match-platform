@@ -20,13 +20,21 @@ describe('Individual Profile data', function() {
   
   // Test how we retrieve an individual profile
   describe('getIndividualProfile()', function() {
-      it('Should exist', function() {
-        expect(getIndividualProfile).to.not.be.null;
-      });
-      it('Should return an object', function() {
-        expect(getIndividualProfile()).to.be.a('object');
-      });
+    it('Should exist', function() {
+      expect(getIndividualProfile).to.not.be.null;
+    });
+    it('Should return an object', function() {
+      expect(getIndividualProfile()).to.be.a('object');
+    });
   });
+  
+  // Test how we generate organizations for profExperience and servExperience
+  describe('genPosition()', function() {
+    it('Should exist', function() {
+      expect(getPosition).to.not.be.null;
+    });  
+  });
+  
   
   // Test the structure of the indProfile object returned
   describe('The individual profile object', function() {
@@ -121,6 +129,5 @@ describe("Organization Profile Data", function() {
     });
     
   });
-  
   
 });
