@@ -41,7 +41,7 @@ header {
 main {
   display: flex;
   flex-flow: column nowrap;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   padding: 8px;
 }
