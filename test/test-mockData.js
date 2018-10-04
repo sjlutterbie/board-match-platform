@@ -12,12 +12,9 @@ chai.use(chaiHttp);
 // Simplify expect functions
 const expect = chai.expect;
 
-// Import elements
-const {app, runServer, closeServer} = require('../server');
+const { getIndividualProfile, getOrganizationProfile } = require('../server/mockData');
 
-// BEGIN TESTS
-
-const { getIndividualProfile } = require('../server/mockData');
+// INDIVIDUAL PROFILE DATA
 
 describe('Individual Profile data', function() {
   
@@ -31,10 +28,12 @@ describe('Individual Profile data', function() {
       });
   });
   
-  // Test the structure of the object returned
+  // Test the structure of the indProfile object returned
   describe('The individual profile object', function() {
       // Generate the object
       const indProfile = getIndividualProfile();
+      
+      console.log(indProfile);
       
       it('Should be an object', function() {
         expect(indProfile).to.be.a('object');
@@ -48,17 +47,35 @@ describe('Individual Profile data', function() {
       });
       
       it('The elements should be the correct types', function() {
+        
         expect(indProfile.id).to.be.a('string');
+        
         expect(indProfile.name).to.be.a('object');
+        
         expect(indProfile.name).to.include.keys('firstName', 'lastName');
           expect(indProfile.name.firstName).to.be.a('string');
           expect(indProfile.name.lastName).to.be.a('string');
+        
         expect(indProfile.contact).to.be.a('object');
           expect(indProfile.contact.phone).to.be.a('string');
           expect(indProfile.contact.email).to.be.a('string');
+        
         expect(indProfile.summary).to.be.a('string');
-        expect(indProfile.profExp).to.be.a('object');
-        expect(indProfile.servExp).to.be.a('object');
+        
+        expect(indProfile.profExp).to.be.a('array');
+          indProfile.profExp.forEach(function(position) {
+            ['org','title','startYear','endYear'].forEach(function(field){
+              expect(position[field]).to.be.a('string');
+            });
+          });
+        
+        expect(indProfile.servExp).to.be.a('array');
+          indProfile.servExp.forEach(function(position) {
+            ['org','title','startYear','endYear'].forEach(function(field){
+              expect(position[field]).to.be.a('string');
+            });
+          });
+        
         expect(indProfile.commLevels).to.be.a('object');
           expect(indProfile.commLevels).to.include.keys(
             'time', 'skills', 'network', 'money'
@@ -69,4 +86,41 @@ describe('Individual Profile data', function() {
             expect(indProfile.commLevels.money).to.be.a('number');
       });
   });
+});
+
+// ORGANIZATION PROFILE DATA
+
+describe("Organization Profile Data", function() {
+  
+  // Test how we retrieve orgProfile data
+  describe('getOrganizationProfile()', function() {
+
+    it('Should exist', function() {
+      expect(getOrganizationProfile).to.not.be.null;
+    });
+
+    it('Should return an object', function() {
+      expect(getOrganizationProfile()).to.be.a('object');
+    });
+
+  });
+  
+  // Test the structure of the orgProfile object returned
+  describe("The Organization Profile object", function() {
+    
+    const orgProfile = getOrganizationProfile();
+    
+    it('Should be an object', function() {
+      expect(orgProfile).to.be.a('object');
+    });
+    
+    it('Should have the correct structure', function() {
+      expect(orgProfile).to.include.keys(
+        'id', 'name', 'contact', 'summary', 'activities', 'commLevels'
+      );
+    });
+    
+  });
+  
+  
 });
