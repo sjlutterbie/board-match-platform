@@ -7,11 +7,6 @@ app.use(express.static('public'));
 const { PORT } = require('./config');
 
 
-
-
-
-
-
 // SERVER LAUNCH FUNCTIONS
 
 let server;
