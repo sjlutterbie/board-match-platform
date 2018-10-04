@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 const { getIndividualProfile, getOrganizationProfile,
-        generatePositions} = require('../server/mockData');
+        generatePositions, generateActivities} = require('../server/mockData');
 
 // INDIVIDUAL PROFILE DATA
 
@@ -70,8 +70,6 @@ describe('Individual Profile data', function() {
   describe('The individual profile object', function() {
       // Generate the object
       const indProfile = getIndividualProfile();
-      
-      console.log(indProfile);
       
       it('Should be an object', function() {
         expect(indProfile).to.be.a('object');
@@ -143,21 +141,75 @@ describe("Organization Profile Data", function() {
 
   });
   
+  // Test how we generate random activities for Organization Profiles
+  describe('generateActivities()', function() {
+    
+    it('Should exist', function() {
+      expect(generateActivities).to.not.be.null;
+    });
+    
+    // Generate between 0 and 9 positions
+    const actCount = Math.floor(Math.random() * 10);
+    const activities = generateActivities(actCount);
+    
+    it(`Should return an array with ${actCount} elements`, function(){
+      expect(activities).to.be.a('array');
+      expect(activities).to.have.length(actCount);
+    });
+    
+    // Each activity should have the correct structure
+    it('Each activity should have the correct structure', function() {
+      activities.forEach(function(activity) {
+        expect(activity).to.include.keys('id', 'name', 'summary');
+        expect(activity.id).to.be.a('string');
+        expect(activity.name).to.be.a('string');
+        expect(activity.summary).to.be.a('string');
+      });
+    });
+
+  });
+  
   // Test the structure of the orgProfile object returned
   describe("The Organization Profile object", function() {
     
     const orgProfile = getOrganizationProfile();
+    
+    console.log(orgProfile);
     
     it('Should be an object', function() {
       expect(orgProfile).to.be.a('object');
     });
     
     it('Should have the correct structure', function() {
-      expect(orgProfile).to.include.keys(
-        'id', 'name', 'contact', 'summary', 'activities', 'commLevels'
-      );
+      
+      const requiredKeys = ['id', 'name', 'contact', 'summary',
+                            'activities', 'commLevels'];
+      
+      expect(orgProfile).to.include.keys(requiredKeys);
+      
+      expect(orgProfile.id).to.be.a('string');
+      expect(orgProfile.name).to.be.a('string');
+      expect(orgProfile.contact).to.be.a('object');
+        expect(orgProfile.contact).to.include.keys('phone', 'email');
+          expect(orgProfile.contact.phone).to.be.a('string');
+          expect(orgProfile.contact.email).to.be.a('string');
+      expect(orgProfile.summary).to.be.a('string');
+      expect(orgProfile.activities).to.be.a('array');
+        const activityKeys = ['id', 'name', 'summary'];
+        orgProfile.activities.forEach(function(activity) {
+          expect(activity).to.include.keys(activityKeys);
+          activityKeys.forEach(function(key) {
+            expect(activity[key]).to.be.a('string');
+          });
+        });
+      
+      expect(orgProfile.commLevels).to.be.a('object');
+        const commLevKeys = ['time', 'skills', 'network', 'money'];
+        expect(orgProfile.commLevels).to.include.keys(commLevKeys);
+        expect(orgProfile.commLevels.time).to.be.a('number');
+        expect(orgProfile.commLevels.skills).to.be.a('string');
+        expect(orgProfile.commLevels.network).to.be.a('boolean');
+        expect(orgProfile.commLevels.money).to.be.a('number');
     });
-    
   });
-  
 });

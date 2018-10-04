@@ -30,13 +30,24 @@ const MOCK_IND_PROFILE = {
     }
 };
 
+// For generating up to 5 organizational activities
+const actCount = Math.floor(Math.random() * 5);
+
 const MOCK_ORG_PROFILE = {
-  id: "",
-  name: "",
-  contact: {},
-  summary: "",
-  activities: [],
-  commLevels: {}
+  id: faker.random.uuid(),
+  name: faker.company.companyName(),
+  contact: {
+    phone: faker.phone.phoneNumber(),
+    email: faker.internet.email()
+  },
+  summary: faker.lorem.paragraph(),
+  activities: generateActivities(actCount),
+  commLevels: {
+    time: faker.random.number(),
+    skills: faker.lorem.sentence(),
+    network: faker.random.boolean(),
+    money: faker.random.number()
+  }
 };
 
 const MOCK_APPLICATION = {};
@@ -57,6 +68,8 @@ function getOrganizationProfile() {
   
 }
 
+// HELPER FUNCTIONS
+
 function generatePositions(count) {
   
   let positions = [];
@@ -74,8 +87,26 @@ function generatePositions(count) {
   return positions;
 }
 
+function generateActivities(count) {
+  
+  let activities = [];
+  
+  for(let i=0; i < count; i++) {
+    activities.push({
+      id: faker.random.uuid(),
+      name: faker.lorem.sentence(),
+      summary: faker.lorem.paragraph()
+    });
+  }
+  
+  return activities;
+  
+}
+
+
 module.exports = {
   getIndividualProfile,
   getOrganizationProfile,
-  generatePositions
+  generatePositions,
+  generateActivities
 };
