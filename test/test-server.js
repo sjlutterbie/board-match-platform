@@ -10,11 +10,19 @@ chai.use(chaiHttp);
 const expect = chai.expect;
 
 // Import elements
-const {app} = require('../server');
+const {app, runServer, closeServer} = require('../server');
 
 // Basic server test
 
 describe('Calling /', function() {
+  
+  before(function() {
+    return runServer();
+  });
+  
+  after(function() {
+    return closeServer();
+  })
   
   it('should return a 200 status code', function() {
     return chai.request(app)
