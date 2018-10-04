@@ -7,7 +7,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 // Load the module
-const openPositions = require('../client/views/openPositions');
+const openPositionsView = require('../client/views/openPositions');
 
 describe('Open Positions View', function(){
   
@@ -15,11 +15,11 @@ describe('Open Positions View', function(){
   describe('openPositions.buildView()', function() {
     
     it('Should exist', function() {
-      expect(openPositions.buildView).to.not.be.undefined;
+      expect(openPositionsView.buildView).to.not.be.undefined;
     });
     
     // Build view
-    const openPositionsViewContent = openPositions.buildView();
+    const openPositionsViewContent = openPositionsView.buildView();
     
     it('Should return a string', function() {
       expect(openPositionsViewContent).to.be.a('string');

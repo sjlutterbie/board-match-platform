@@ -7,7 +7,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 // Load the module
-const dashboard = require('../client/views/dashboard');
+const dashboardView = require('../client/views/dashboard');
 
 describe('Dashboard View', function() {
   
@@ -15,11 +15,11 @@ describe('Dashboard View', function() {
   describe('dashboard.buildView()', function() {
     
     it('Should exist', function() {
-      expect(dashboard.buildView).to.not.be.undefined;
+      expect(dashboardView.buildView).to.not.be.undefined;
     });
     
     // Build the view
-    const dashboardViewContent = dashboard.buildView();
+    const dashboardViewContent = dashboardView.buildView();
     
     it('Should return a string', function() {
       expect(dashboardViewContent).to.be.a('string');

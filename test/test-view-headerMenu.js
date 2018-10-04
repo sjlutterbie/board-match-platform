@@ -6,7 +6,7 @@ const chai = require('chai');
 // Simplify expect functions
 const expect = chai.expect;
 
-const headerMenu = require('../client/views/headerMenu');
+const headerMenuView = require('../client/views/headerMenu');
 
 describe('Header Menu View', function() {
   
@@ -14,11 +14,11 @@ describe('Header Menu View', function() {
   describe('headerMenu.buildView()', function() {
     
     it('Should exist', function() {
-      expect(headerMenu.buildView).to.not.be.undefined;
+      expect(headerMenuView.buildView).to.not.be.undefined;
     });
     
     // Build the view
-    const headerMenuViewContent = headerMenu.buildView();
+    const headerMenuViewContent = headerMenuView.buildView();
     
     it('Should return a string', function() {
       expect(headerMenuViewContent).to.be.a('string');

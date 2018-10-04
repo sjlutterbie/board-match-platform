@@ -7,7 +7,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 // Load the view module
-const indProfile = require('../client/views/individualProfile');
+const indProfileView = require('../client/views/individualProfile');
 
 describe('Individual Profile View', function() {
   
@@ -15,11 +15,11 @@ describe('Individual Profile View', function() {
   describe('indProfile.buildView()', function() {
     
     it('Should exist', function(){
-      expect(indProfile.buildView).to.not.be.undefined;
+      expect(indProfileView.buildView).to.not.be.undefined;
     });
     
     // Generate the view
-    const indProfViewContent = indProfile.buildView();
+    const indProfViewContent = indProfileView.buildView();
     
     it('Should return a string', function() {
       expect(indProfViewContent).to.be.a('string');

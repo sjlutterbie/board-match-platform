@@ -7,7 +7,7 @@ const chai = require('chai');
 const expect = chai.expect;
 
 //Load the module
-const sideBarMenu = require('../client/views/sideBarMenu');
+const sideBarMenuView = require('../client/views/sideBarMenu');
 
 describe('SideBarMenu View', function() {
   
@@ -15,11 +15,11 @@ describe('SideBarMenu View', function() {
   describe('sideBarMenu.buildView()', function() {
     
     it('Should exist', function() {
-      expect(sideBarMenu.buildView).to.not.be.undefined;
+      expect(sideBarMenuView.buildView).to.not.be.undefined;
     });
 
     // Generate the view    
-    const sideBarMenuViewContent = sideBarMenu.buildView();
+    const sideBarMenuViewContent = sideBarMenuView.buildView();
     
     it('Should return a string', function() {
       expect(sideBarMenuViewContent).to.be.a('string');
