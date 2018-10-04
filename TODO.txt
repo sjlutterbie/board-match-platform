@@ -1,5 +1,0 @@
-Map out file structure
-  Create core files
-    Create high-level pseudocode
-    
-Implement mongoose DB access for server functions, environment variables, and test environment
