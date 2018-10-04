@@ -2,9 +2,23 @@
 
 const express = require('express');
 const app = express();
-app.use(express.static('client/public'));
 
 const { PORT } = require('./config');
+
+const portalView = require('./client/views/portal');
+
+app.use(express.static('client/public'));
+
+
+app.all("/portal", (req, res) => {
+  res.send(portalView.buildView());
+});
+
+
+
+
+
+
 
 
 // SERVER LAUNCH FUNCTIONS

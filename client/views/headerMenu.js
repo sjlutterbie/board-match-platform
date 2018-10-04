@@ -2,7 +2,7 @@
 
 function buildView() {
  
- return '<p>Header Menu</p>'; 
+ return '<p>Header Menu Success!</p>'; 
 }
 
 

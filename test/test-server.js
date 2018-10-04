@@ -32,3 +32,23 @@ describe('Calling /', function() {
     });
   });
 });
+
+describe('Calling /portal', function () {
+  
+  before(function() {
+    return runServer();
+  });
+  
+  after(function() {
+    return closeServer();
+  });
+  
+  it('Should return a 200 status code', function() {
+    return chai.request(app)
+      .get('/')
+      .then(function(res) {
+          expect(res).to.have.status(200);
+        });
+  });
+  
+});
