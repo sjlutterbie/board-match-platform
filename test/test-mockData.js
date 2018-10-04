@@ -12,7 +12,8 @@ chai.use(chaiHttp);
 // Simplify expect functions
 const expect = chai.expect;
 
-const { getIndividualProfile, getOrganizationProfile } = require('../server/mockData');
+const { getIndividualProfile, getOrganizationProfile,
+        generatePositions} = require('../server/mockData');
 
 // INDIVIDUAL PROFILE DATA
 
@@ -29,10 +30,39 @@ describe('Individual Profile data', function() {
   });
   
   // Test how we generate organizations for profExperience and servExperience
-  describe('genPosition()', function() {
+  describe('generatePositions()', function() {
     it('Should exist', function() {
-      expect(getPosition).to.not.be.null;
-    });  
+      expect(generatePositions).to.not.be.null;
+    });
+    
+    // Generate between 0 and 9 positions
+    const posCount = Math.floor(Math.random() * 10);
+    const positions = generatePositions(posCount);
+    
+    it(`Should return an array with ${posCount} elements`, function(){
+      expect(positions).to.be.a('array');
+      expect(positions).to.have.length(posCount);
+    });
+    
+
+    // Each position should have the correct structure
+    it('Should include correctly formatted objects', function(){
+      
+      positions.forEach(function(position) {
+
+        expect(position).to.be.a('object');
+
+        const requiredKeys = ['id', 'org', 'position', 'startYear', 'endYear'];
+        
+        expect(position).to.include.keys(requiredKeys);
+        
+        // Verify each element is the correct type        
+        requiredKeys.forEach(function(key) {
+          expect(position[key]).to.be.a('string');
+        });        
+
+      });
+    });
   });
   
   
@@ -72,14 +102,14 @@ describe('Individual Profile data', function() {
         
         expect(indProfile.profExp).to.be.a('array');
           indProfile.profExp.forEach(function(position) {
-            ['org','title','startYear','endYear'].forEach(function(field){
+            ['org','position','startYear','endYear'].forEach(function(field){
               expect(position[field]).to.be.a('string');
             });
           });
         
         expect(indProfile.servExp).to.be.a('array');
           indProfile.servExp.forEach(function(position) {
-            ['org','title','startYear','endYear'].forEach(function(field){
+            ['org','position','startYear','endYear'].forEach(function(field){
               expect(position[field]).to.be.a('string');
             });
           });

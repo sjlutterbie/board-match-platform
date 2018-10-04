@@ -5,6 +5,10 @@ const faker = require('faker');
 
 const MOCK_USER_ACCOUNT = {};
 
+// For generating up to 5 professional and service experience objects
+const profCount = Math.floor(Math.random() * 5);
+const servCount = Math.floor(Math.random() * 5);
+
 const MOCK_IND_PROFILE = {
     id: faker.random.uuid(),
     name: {
@@ -16,14 +20,8 @@ const MOCK_IND_PROFILE = {
       email: faker.internet.email()
     },
     summary: faker.lorem.paragraph(),
-    profExp: [
-      {
-        org: faker.company.companyName(),
-        title: faker.name.jobType(),
-        startYear: faker.random.alphaNumeric(4),
-        endYear: faker.random.alphaNumeric(4)
-      }],
-    servExp: [],
+    profExp: generatePositions(profCount),
+    servExp: generatePositions(servCount),
     commLevels: {
       time: faker.random.number(),
       skills: faker.lorem.sentence(),
@@ -59,4 +57,25 @@ function getOrganizationProfile() {
   
 }
 
-module.exports = { getIndividualProfile, getOrganizationProfile };
+function generatePositions(count) {
+  
+  let positions = [];
+  
+  for (let i = 0; i < count; i++) {
+    positions.push({
+        id: faker.random.uuid(),
+        org: faker.company.companyName(),
+        position: faker.name.jobType(),
+        startYear: faker.random.alphaNumeric(4),
+        endYear: faker.random.alphaNumeric(4)
+    });
+  }
+  
+  return positions;
+}
+
+module.exports = {
+  getIndividualProfile,
+  getOrganizationProfile,
+  generatePositions
+};
