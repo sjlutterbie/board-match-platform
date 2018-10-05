@@ -2,7 +2,7 @@
 
 function buildView() {
   
-  return '<p>Application View';
+  return '<p>Application View</p>';
 }
 
 module.exports = {
