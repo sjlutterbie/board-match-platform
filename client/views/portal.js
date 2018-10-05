@@ -7,8 +7,6 @@ const dashboardView = require('./dashboard');
 
 function buildView() {
   
-  foo.sayHello();
-  
   const viewHTML = `
   <!DOCTYPE html>
 
