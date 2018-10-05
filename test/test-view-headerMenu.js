@@ -42,11 +42,25 @@ describe('Header Menu View', function() {
     // Insert the HTML
     _domBody.innerHTML = headerMenuView.buildView();
     
-    it('Should inject the ouput', function() {
+    it('Should inject the correct output', function() {
       expect(_domBody.innerHTML)
         .to.equal(headerMenuView.buildView());
     });
     
+    it('Should inject a single <ul>, with two <li> children', function() {
+      expect(_domBody.children.length).to.equal(1);
+      expect(_domBody.firstChild.tagName).to.equal('UL');
+      expect(_domBody.querySelector('ul').children.length).to.equal(2);
+    });
+    
+    it('Each <li> element should include a single <a> element', function() {
+      
+      const ulContents = _domBody.querySelector('ul').children;
+      
+      for(let i = 0; i < ulContents.length; i++) {
+        expect(ulContents[i].children.length).to.equal(1);
+        expect(ulContents[i].children[0].tagName).to.equal('A');
+      }
+    });
   });
-  
 });
