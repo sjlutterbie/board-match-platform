@@ -1,11 +1,13 @@
 'use strict';
 
 // Load required views
-const headerMenuView = require(__dirname + '/headerMenu');
-const sideBarMenuView = require(__dirname + '/sideBarMenu');
-const dashboardView = require(__dirname + '/dashboard');
+const headerMenuView = require('./headerMenu');
+const sideBarMenuView = require('./sideBarMenu');
+const dashboardView = require('./dashboard');
 
 function buildView() {
+  
+  foo.sayHello();
   
   const viewHTML = `
   <!DOCTYPE html>
