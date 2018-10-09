@@ -80,6 +80,31 @@ function createIndProfile(userAccountId) {
     return experience;
     
   }
+  
+  function bl_indProfile2userAccount(userAccountId, indProfileId) {
+    
+    // Validate arguments
+    if(typeof userAccountId != 'string') {
+      throw 'userAccountId is not a string';
+    }
+    if(userAccountId.length === 0 ) {
+      throw 'userAccountId has length 0';
+    }
+    if(typeof indProfileId != 'string') {
+      throw 'indProfileId is not a string';
+    }
+    if(indProfileId.length === 0) {
+      throw 'indProfileId has length 0';
+    }
+    
+    
+    
+    
+    return [userAccountId, indProfileId];
+     
+    
+  }
+  
 
 
   // id: uuid
@@ -104,12 +129,17 @@ function createIndProfile(userAccountId) {
       // Each: string (linked after all profiles created)
 
 
+// BUILD SESSION DATA
+
+
+
 
 // Module exports
 
 module.exports = {
   createUserAccount,
   createIndProfile,
-    createExperience
+    createExperience,
+    bl_indProfile2userAccount
   
 };
