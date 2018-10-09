@@ -61,6 +61,39 @@ describe('Individual profile creation', function() {
     });
   });
   
+  describe('Helper function: createExperience()', function() {
+    it('Should exist', function() {
+      expect(mockData.createExperience).to.not.be.undefined;
+    });
+    it('Should return an object', function () {
+      expect(mockData.createExperience()).to.be.a('object');
+    });
+  });
+  
+  describe('The experience helper object', function() {
+  
+    // Create an experience object
+    const experience = mockData.createExperience();
+
+    it('Should have the correct elements', function() {
+      const requiredKeys = ['type', 'organization', 'title', 'description',
+        'startYear', 'endYear'];
+      expect(experience).to.have.keys(requiredKeys);
+    });
+    
+    it('Each element should have the correct structure', function() {
+      expect(experience.type).to.be.a('string');
+        expect(['professional', 'service', 'education/training']).to.
+          include(experience.type);
+      expect(experience.organization).to.be.a('string');
+      expect(experience.title).to.be.a('string');
+      expect(experience.description).to.be.a('string');
+      expect(experience.startYear).to.be.a('string');
+      expect(experience.endYear).to.be.a('string');
+    });
+    
+  });
+  
   describe('The indProfile object', function() {
     
     // Create an indProfile object

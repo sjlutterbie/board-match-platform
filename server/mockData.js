@@ -42,6 +42,36 @@ function createIndProfile() {
   
 }
 
+  //Helper functions
+  function createExperience() {
+    
+    const experience = {
+      type: '',
+      organization: faker.company.companyName(),
+      title: faker.name.jobTitle(),
+      description: faker.lorem.paragraph(),
+      startYear: '',
+      endYear: ''
+    };
+    
+    // Generate specific experience types
+    const expTypes = ['professional', 'service', 'education/training'];
+    experience.type = expTypes[Math.floor(Math.random() * 3)];
+    
+    // Create realistic start/end dates (endDate may be present)
+    experience.startYear = 1980 + Math.floor(Math.random() * 25);
+    experience.endYear = experience.startYear + Math.floor(Math.random() * 10) + 1;
+    if(experience.endYear > 2018) {
+      experience.endYear = 'Present';
+    }
+    
+    experience.startYear = experience.startYear.toString();
+    experience.endYear = experience.endYear.toString();
+
+    return experience;
+    
+  }
+
 
   // id: uuid
   // overview: object
@@ -70,6 +100,7 @@ function createIndProfile() {
 
 module.exports = {
   createUserAccount,
-  createIndProfile
+  createIndProfile,
+    createExperience
   
 };
