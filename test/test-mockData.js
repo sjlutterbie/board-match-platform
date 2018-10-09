@@ -168,7 +168,6 @@ describe('Individual profile creation', function() {
     
   });
   
-  
 });
 
 
@@ -223,9 +222,91 @@ describe('Individual profile creation', function() {
 
 // APPLICATIONS
 
+// BUILD SESSION DATA
 
+describe("sessionData builder", function() {
+  
+  describe("buildSessionData()", function() {
+    it('Should exist', function() {
+      expect(mockData.buildSessionData).to.not.be.undefined;
+    });
+    it('Should return an object', function() {
+      expect(mockData.buildSessionData()).to.be.a('object');
+    });
+  });
+  
+  // Build a sessionData object
+  const sessionData = mockData.buildSessionData();
+  const dataTypes = ['userAccounts', 'indProfiles', 'orgProfiles', 
+                     'positions', 'applications'];
+  
+  describe('The sessionData object', function() {
+    it('Should include the correct elements', function() {
+      expect(sessionData).to.have.keys(dataTypes);
+    });
+    it('Each element should be an array', function() {
+      dataTypes.forEach(function(dataType) {
+        expect(sessionData[dataType]).to.be.a('array'); 
+      });
+    });
+  });
+  
+  // userAccounts objects
+  describe('sessionData.userAccounts', function() {
+    it('Should contain 10 elements', function() {
+      expect(sessionData.userAccounts.length).to.equal(10);
+    });
+    it('The first userAccount should have id \'TESTER\'', function(){
+      expect(sessionData.userAccounts[0].id).to.equal('TESTER');
+    });
+  });
+  
+  // indProfile objects
+  describe('sessionData.indProfiles', function() {
+    
+    it('Should contain 1 to 10 elements', function() {
+      expect(sessionData.indProfiles.length).to.be.gte(1);
+      expect(sessionData.indProfiles.length).to.be.lte(10);
+    });
+    it('The first element should have relations.userAccount = \'TESTER\'',
+       function() {
+         expect(sessionData.indProfiles[0].relations.userAccount).to.equal('TESTER');
+    });
+    it('Every relations.userAccount element should refer to a indProfile',
+        function() {
+          // Extract userAccount.ids
+          const userIds = [];
+          sessionData.userAccounts.forEach(function(account) {
+            userIds.push(account.id);
+          });
+          // Test the profiles
+          sessionData.indProfiles.forEach(function(profile) {
+            expect(userIds).to.include(profile.relations.userAccount);
+          });    
+        }
+    );
+    it('IF an indProfile links to a userAccount, '+
+        'the userAccount should link back to the indProfile',
+        function() {
+          sessionData.indProfiles.forEach(function(indProfile) {
+            if (indProfile.relations.userAccount != '') {
+              const userAccountId = indProfile.relations.userAccount;
+              
+              // Find the associated userAccount
+              const userAccount = sessionData.userAccounts.find(
+                function(account) {
+                  return account.id === userAccountId;
+                }
+              );
 
+              expect(userAccount.relations.indProfile).to.equal(indProfile.id);
 
+            }
+          });
+        }
+      );
+  });
+});
 
 
 // Create 3 user accounts. The first userAccount ID is set to "TESTER"

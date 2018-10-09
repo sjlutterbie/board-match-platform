@@ -28,9 +28,9 @@ function createUserAccount() {
 function createIndProfile(userAccountId) {
  
  const indProfile = {
-   id: '',
-   overview: '',
-   linkedIn: '',
+   id: faker.random.uuid(),
+   overview: faker.lorem.paragraph(),
+   linkedIn: faker.internet.url(),
    experience: [],
    relations: {
      userAccount: '',
@@ -97,7 +97,7 @@ function createIndProfile(userAccountId) {
       throw 'indProfileId has length 0';
     }
     
-    
+    // TODO - FINISH THIS FUNCTION
     
     
     return [userAccountId, indProfileId];
@@ -131,6 +131,53 @@ function createIndProfile(userAccountId) {
 
 // BUILD SESSION DATA
 
+function buildSessionData() {
+  
+  const sessionData = {
+    userAccounts: [],
+    indProfiles: [],
+    orgProfiles: [],
+    positions: [],
+    applications: []
+  };
+  
+  // Generate 10 user accounts
+  for(let i = 0; i < 10; i++) {
+    sessionData.userAccounts.push(createUserAccount());
+  }
+    // Set the first userAccount.id for testing purposes
+    sessionData.userAccounts[0].id = "TESTER";
+  
+  // Generate 1-10 indProfiles
+  const indProfCount = Math.floor(Math.random() * 10) + 1;
+  // Set 1st userId to TESTER, remainder to random userAccounts
+  const userIds = ['TESTER'];  
+
+  for(let i = 1; i < indProfCount; i++) {
+    userIds.push(sessionData.userAccounts[i].id);
+  }  
+  
+  // Generate indProfiles
+  for (let i = 0; i < indProfCount; i++) {
+    const tempProfile = createIndProfile(userIds[i]);
+    sessionData.indProfiles.push(tempProfile);
+    
+    // if tempProfile is associated with a userAccount
+    if (tempProfile.relations.userAccount != '') {
+      // Relate the userAccount to the indProfile
+      sessionData.userAccounts.find(function(account) {
+        return account.id === tempProfile.relations.userAccount;
+      }).relations.indProfile = tempProfile.id;
+
+      
+    }
+    
+    
+  }
+  
+  return sessionData;
+  
+}
 
 
 
@@ -140,6 +187,7 @@ module.exports = {
   createUserAccount,
   createIndProfile,
     createExperience,
-    bl_indProfile2userAccount
+    bl_indProfile2userAccount,
+  buildSessionData
   
 };
