@@ -6,6 +6,7 @@ const app = express();
 const { PORT } = require('./config');
 
 const portalView = require('./client/views/portal');
+const { buildSessionData } = require('./server/mockData');
 
 app.use(express.static('client/public'));
 
@@ -15,7 +16,9 @@ app.all("/portal", (req, res) => {
   res.send(portalView.buildView());
 });
 
-
+app.get('/mockData', (req, res) => {
+  res.send(buildSessionData());
+});
 
 
 

@@ -149,6 +149,7 @@ function createPosition() {
 function createApplication() {
   
   const application = {
+    id: faker.random.uuid(),
     coverMessage: faker.lorem.paragraph(),
     dateSubmitted: faker.date.recent(),
     relations: {
@@ -232,7 +233,7 @@ function buildSessionData() {
     }
     
   // Generate 0-5 positions per orgProfile
-    for (let i = 0; i < (orgProfCount * 5); i++){
+    for (let i = 0; i < (orgProfCount * Math.floor(Math.random() * 5) + 1); i++){
       
       const tempPosition = createPosition();
       
@@ -252,15 +253,64 @@ function buildSessionData() {
         sessionData.orgProfiles.find(function(org) {
           return org.id === tempOrgId;
         }).relations.positions.push(tempPosition.id);
-
-      //console.log(tempPosition);
-      
+ 
       sessionData.positions.push(tempPosition);
+    }
+ 
+    // Generate 0 - 3 applications per position
+    const posCount = sessionData.positions.length;
+    
+    for(let i = 0; i < (posCount * Math.floor(Math.random() * 3)) +1; i++) {
       
+      const tempApplication = createApplication();
       
+      // Relate tempApplication with a random position
+        // Collect position IDs
+        const posIds = [];
+        for(let i = 0; i < sessionData.positions.length; i++) {
+          posIds.push(sessionData.positions[i].id);
+        }
+
+        // Assign random posId to application
+        const tempPosId = posIds[Math.floor(Math.random() * posIds.length)];
+        tempApplication.relations.position = tempPosId;
+        
+
+        // Relate the position back to the application
+        sessionData.positions.find(function(pos) {
+          return pos.id === tempPosId;
+        }).relations.applications.push(tempApplication.id);
+        
+        
+        // Relate the application to a random indProfile
+          // Collect indProf IDs
+          const indProfIds = [];
+          for(let i = 0; i < sessionData.indProfiles.length; i++) {
+            indProfIds.push(sessionData.indProfiles[i].id);
+          }
+          
+          // Assign random indProfId to application
+          let tempIndProfId = indProfIds[Math.floor(Math.random()
+                                           * indProfIds.length)];
+          // 20% chance it gets assigned to indProf TESTER
+          if (Math.random() > .20) {
+            tempIndProfId = sessionData.userAccounts.find(function(account) {
+              return account.id = 'TESTER';
+            }).relations.indProfile;
+          }
+                                           
+                                           
+          tempApplication.relations.indProfile = tempIndProfId;
+        
+          // Relate the indProfile back to the application
+          sessionData.indProfiles.find(function(prof) {
+            return prof.id === tempIndProfId;
+          }).relations.applications.push(tempApplication.id);
+
+         sessionData.applications.push(tempApplication);
+ 
       
     }
-  
 
   return sessionData;
   

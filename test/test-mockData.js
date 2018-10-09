@@ -264,13 +264,15 @@ describe('Application creation', function() {
     
     // Create the object
     const application = mockData.createApplication();
-    const applicationKeys = ['coverMessage', 'dateSubmitted', 'relations'];
+    const applicationKeys = ['id','coverMessage', 'dateSubmitted', 'relations'];
     
     it('Should have the necessary elements', function() {
       expect(application).to.have.keys(applicationKeys);
     });
     
     it('Each element should have the correct structure', function() {
+      expect(application.id).to.be.a('string');
+        expect(application.id.length).to.be.gt(0);
       expect(application.coverMessage).to.be.a('string');
       expect(application.dateSubmitted).to.be.a('date');
       expect(application.relations).to.be.a('object');
@@ -440,17 +442,53 @@ describe("sessionData builder", function() {
     });
   });
 
+  describe('sessionData.applications', function() {
+    
+    // Convenience variable
+    const applications = sessionData.applications;
+    
+    it('Should include at least one application', function () {
+      expect(applications.length).to.be.gte(1);
+    });
+    it('Should create 0-3 applications per position', function() {
+      expect(applications.length).to.be.lte(sessionData.positions.length * 3);
+    });
+    it('Each application should relate to one position', function() {
+      applications.forEach(function(application) {
+        expect(application.relations.position.length).to.be.gte(1);
+        // Extract list of posIds
+        const posIds = [];
+        for(let i = 0; i < sessionData.positions.length; i++) {
+          posIds.push(sessionData.positions[i].id);
+        }
+        expect(posIds).to.include(application.relations.position);
+      });
+    });
+    
+    it('And each position should relate back to the application', function() {
+      applications.forEach(function(application) {
+        const tempPos = sessionData.positions.find(function(pos) {
+          return pos.id === application.relations.position;
+        });
+        expect(tempPos.relations.applications).to.include(application.id);
+      });
+    });
+    it('Each application should relate to one indProfile', function() {
+      applications.forEach(function(application) {
+        expect(application.relations.indProfile.length).to.be.gte(1);
+        // Extract list of indProfIds
+        const indProfIds = [];
+        for(let i = 0; i < sessionData.indProfiles.length; i ++) {
+          indProfIds.push(sessionData.indProfiles[i].id);
+        }
+        expect(indProfIds).to.include(application.relations.indProfile);
+      });
+      
+    });
+
+
+  });
   
+
 });
-
-
-// Create 3 user accounts. The first userAccount ID is set to "TESTER"
-  // Each account has one indProfile
-  // Each account has 1-3 orgProfiles
-    // Each orgProfile has 1-3 positions
-    // Each position has 1-5 applications
-      // Each application has 1 indProfile
-      // There's a 25% chance the indProfile set to "TESTER"    
-  
-
 
