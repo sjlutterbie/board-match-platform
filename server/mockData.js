@@ -25,7 +25,7 @@ function createUserAccount() {
 // INDIVIDUAL PROFILE
   // Creates an indProfile, linking it back to a userAccount
     // NOTE: For testing, userAccount may default to "_test"
-function createIndProfile() {
+function createIndProfile(userAccountId) {
  
  const indProfile = {
    id: '',
@@ -37,6 +37,15 @@ function createIndProfile() {
      applications: []
    }
  };
+ 
+ // Create 0 - 5 experiences
+ const expCount = Math.floor(Math.random() * 6);
+ for (let i = 0; i < expCount; i++) {
+   indProfile.experience.push(createExperience());
+ }
+ 
+ // Set relations.userAccount (based on function argument)
+ indProfile.relations.userAccount = userAccountId;
  
  return indProfile;
   

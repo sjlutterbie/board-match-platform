@@ -55,7 +55,6 @@ describe('Individual profile creation', function() {
     it('Should exist', function() {
       expect(mockData.createIndProfile).to.not.be.undefined;
     });
-    
     it('Should return an object', function() {
       expect(mockData.createIndProfile()).to.be.a('object');
     });
@@ -80,7 +79,6 @@ describe('Individual profile creation', function() {
         'startYear', 'endYear'];
       expect(experience).to.have.keys(requiredKeys);
     });
-    
     it('Each element should have the correct structure', function() {
       expect(experience.type).to.be.a('string');
         expect(['professional', 'service', 'education/training']).to.
@@ -91,33 +89,40 @@ describe('Individual profile creation', function() {
       expect(experience.startYear).to.be.a('string');
       expect(experience.endYear).to.be.a('string');
     });
-    
   });
   
   describe('The indProfile object', function() {
     
     // Create an indProfile object
-    const indProfile = mockData.createIndProfile();
+    const userAccountId = "TEST-userAccountID";
+    const indProfile = mockData.createIndProfile(userAccountId);
     
     it('Should have the correct elements', function() {
       const requiredKeys = ['id', 'overview', 'linkedIn', 'experience',
         'relations'];
       expect(indProfile).to.have.keys(requiredKeys);
     });
-    
     it('Each element should have the correct structure', function() {
       expect(indProfile.id).to.be.a('string');
       expect(indProfile.overview).to.be.a('string');
       expect(indProfile.linkedIn).to.be.a('string');
       expect(indProfile.experience).to.be.a('array');
+        // IF experience elements exist, confirm they have the right keys
+        indProfile.experience.forEach(function(experience) {
+          const requiredKeys = ['type', 'organization', 'title', 'description',
+            'startYear', 'endYear'];
+          expect(experience).to.have.keys(requiredKeys);
+        });
       expect(indProfile.relations).to.be.a('object');
         expect(indProfile.relations.userAccount).to.be.a('string');
         expect(indProfile.relations.applications).to.be.a('array');
     });
-    
-    
+    it('indProfile.relations.userAccount should equal ' + 
+       'the createIndProfile(userAccountId) argument', function() {
+          expect(indProfile.relations.userAccount).to.equal(userAccountId);
+    });
+
   });
-  
 });
 
 
