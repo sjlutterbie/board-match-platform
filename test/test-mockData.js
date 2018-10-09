@@ -34,9 +34,11 @@ describe('User Authorization Data', function() {
   // Test how we generate client authoriatization data
   describe('getClientAuthData()', function() {
     it('Should include the correct elements', function() {
-      const requiredKeys = ['authToken'];
+      const requiredKeys = ['authToken', 'indProfile', 'orgProfiles'];
       expect(clientAuthData).to.include.keys(requiredKeys);
       expect(clientAuthData.authToken).to.be.a('string');
+      expect(clientAuthData.indProfile).to.be.a('string');
+      expect(clientAuthData.orgProfiles).to.be.a('array');
     });
   });
   
@@ -336,7 +338,7 @@ describe('Session Data Generator', function() {
     
     it('Each element should be the correct type', function() {
       expect(sessionData.TEST_ElementCounts).to.be.a('object');
-      expect(sessionData.userAccount).to.be.a('array');
+      expect(sessionData.userAccount).to.be.a('object');
       expect(sessionData.indProfiles).to.be.a('array');
       expect(sessionData.orgProfiles).to.be.a('array');
       expect(sessionData.positions).to.be.a('array');
@@ -360,10 +362,32 @@ describe('Session Data Generator', function() {
       expect(Object.keys(sessionData.TEST_ElementCounts).length).to.equal(5);
       const countVars = sessionData.TEST_ElementCounts;
       Object.keys(countVars).forEach(function(element) {
-        expect(sessionData[element].length).to.equal(countVars[element]);
+        if (element === 'userAccount') {
+          expect(Object.keys(sessionData[element]).length).to.equal(3);
+        } else {
+            expect(sessionData[element].length).to.equal(countVars[element]);
+        }
       });
     });
   });
   
+  it('The elements should be correctly linked for testing purposes', function() {
+    
+    // The userAccount should be associated with an indProfile
+      // Convenience variables
+        const userAccount = sessionData.userAccount;
+        const indProfiles = sessionData.indProfiles;
+        const orgProfiles = sessionData.orgProfiles;
+        const positions = sessionData.positions;
+        const applications = sessionData.applications;
+        
+        // userAccount should be linked with the first indProfile
+        expect(userAccount.indProfile).to.equal(indProfiles[0].id);
+        
+        // userAccount should be linked with at least one profile
+        expect(userAccount.orgProfiles.length).to.be.at.least(1);
+        
+
+  })
   
 })

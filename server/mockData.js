@@ -7,7 +7,9 @@ const faker = require('faker');
 // DEV DATA OBJECTS
 
 const MOCK_USER_ACCOUNT = {
-  authToken: faker.random.uuid()
+  authToken: faker.random.uuid(),
+  indProfile: '',
+  orgProfiles: []
 };
 
 // For generating up to 5 professional and service experience objects
@@ -145,8 +147,8 @@ function generateSessionData() {
   
   // Initiate data object
   const sessionData = {
-    TEST_ElementCount: {},
-    userAccount: [],
+    TEST_ElementCounts: {},
+    userAccount: {},
     indProfiles: [],
     orgProfiles: [],
     positions: [],
@@ -164,9 +166,7 @@ function generateSessionData() {
   };
 
   // Generate data
-  for(let i = 0; i < sessionData.TEST_ElementCounts.userAccount; i++) {
-    sessionData.userAccount.push(getClientAuthData());
-  }
+  sessionData.userAccount = getClientAuthData();
   
   for(let i = 0; i < sessionData.TEST_ElementCounts.indProfiles; i++) {
     sessionData.indProfiles.push(getIndividualProfile());
@@ -184,10 +184,10 @@ function generateSessionData() {
     sessionData.applications.push(getApplication());
   }
   
-
-
-
+  // Build Links between certain elements
+  sessionData.userAccount.indProfile = sessionData.indProfiles[0].id;
   
+  sessionData.userAccount.orgProfiles.push(sessionData.orgProfiles[0].id);
 
   return sessionData;
   
