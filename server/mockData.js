@@ -3,7 +3,12 @@
 
 const faker = require('faker');
 
-const MOCK_USER_ACCOUNT = {};
+
+// DEV DATA OBJECTS
+
+const MOCK_USER_ACCOUNT = {
+  authToken: faker.random.uuid()
+};
 
 // For generating up to 5 professional and service experience objects
 const profCount = Math.floor(Math.random() * 5);
@@ -67,6 +72,14 @@ const MOCK_APPLICATION = {
 };
 
 
+// Data functions
+
+function getClientAuthData() {
+ 
+ return MOCK_USER_ACCOUNT;
+  
+}
+
 function getIndividualProfile() {
 
   return MOCK_IND_PROFILE;
@@ -91,47 +104,105 @@ function getApplication() {
   
 }
 
-// HELPER FUNCTIONS
-
-function generatePositions(count) {
+  // HELPER FUNCTIONS
   
-  let positions = [];
+  function generatePositions(count) {
+    
+    let positions = [];
+    
+    for (let i = 0; i < count; i++) {
+      positions.push({
+          id: faker.random.uuid(),
+          org: faker.company.companyName(),
+          position: faker.name.jobType(),
+          startYear: faker.random.alphaNumeric(4),
+          endYear: faker.random.alphaNumeric(4)
+      });
+    }
+    
+    return positions;
+  }
   
-  for (let i = 0; i < count; i++) {
-    positions.push({
+  function generateActivities(count) {
+    
+    let activities = [];
+    
+    for(let i=0; i < count; i++) {
+      activities.push({
         id: faker.random.uuid(),
-        org: faker.company.companyName(),
-        position: faker.name.jobType(),
-        startYear: faker.random.alphaNumeric(4),
-        endYear: faker.random.alphaNumeric(4)
-    });
+        name: faker.lorem.sentence(),
+        summary: faker.lorem.paragraph()
+      });
+    }
+    
+    return activities;
+    
   }
   
-  return positions;
+// SESSION BUILDER FUNCTION
+
+function generateSessionData() {
+  
+  // Initiate data object
+  const sessionData = {
+    TEST_ElementCount: {},
+    userAccount: [],
+    indProfiles: [],
+    orgProfiles: [],
+    positions: [],
+    applications: []
+    
+  };
+  
+  // Create counter variables
+  sessionData.TEST_ElementCounts = {
+    userAccount: 1,
+    indProfiles: Math.floor(Math.random() * 10) + 1,
+    orgProfiles: Math.floor(Math.random() * 10) + 1,
+    positions: Math.floor(Math.random() * 10) + 1,
+    applications: Math.floor(Math.random() * 10) + 1
+  };
+
+  // Generate data
+  for(let i = 0; i < sessionData.TEST_ElementCounts.userAccount; i++) {
+    sessionData.userAccount.push(getClientAuthData());
+  }
+  
+  for(let i = 0; i < sessionData.TEST_ElementCounts.indProfiles; i++) {
+    sessionData.indProfiles.push(getIndividualProfile());
+  }
+  
+  for(let i = 0; i < sessionData.TEST_ElementCounts.orgProfiles; i++) {
+    sessionData.orgProfiles.push(getOrganizationProfile());
+  }
+  
+  for(let i=0; i < sessionData.TEST_ElementCounts.positions; i++) {
+    sessionData.positions.push(getPosition());
+  }
+  
+  for(let i=0; i < sessionData.TEST_ElementCounts.applications; i++) {
+    sessionData.applications.push(getApplication());
+  }
+  
+
+
+
+  
+
+  return sessionData;
+  
 }
 
-function generateActivities(count) {
-  
-  let activities = [];
-  
-  for(let i=0; i < count; i++) {
-    activities.push({
-      id: faker.random.uuid(),
-      name: faker.lorem.sentence(),
-      summary: faker.lorem.paragraph()
-    });
-  }
-  
-  return activities;
-  
-}
+
 
 
 module.exports = {
+  getClientAuthData,
   getIndividualProfile,
   getOrganizationProfile,
   generatePositions,
   generateActivities,
   getPosition,
-  getApplication
+  getApplication,
+  generateSessionData
 };

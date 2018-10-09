@@ -11,6 +11,7 @@ app.use(express.static('client/public'));
 
 
 app.all("/portal", (req, res) => {
+  
   res.send(portalView.buildView());
 });
 

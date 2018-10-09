@@ -10,9 +10,37 @@ const chai = require('chai');
 // Simplify expect functions
 const expect = chai.expect;
 
-const { getIndividualProfile, getOrganizationProfile,
+const { getClientAuthData, getIndividualProfile, getOrganizationProfile,
         generatePositions, generateActivities,
-        getPosition, getApplication} = require('../server/mockData');
+        getPosition, getApplication,
+        generateSessionData} = require('../server/mockData');
+
+// CLIENT AUTHORIZATION DATA
+
+describe('User Authorization Data', function() {
+  
+  // Test how we retrieve client authorization data
+  describe('getClientAuthData()', function() {
+    it('Should exist', function() {
+      expect(getClientAuthData).to.not.be.null;
+    });
+    it('Should return an object', function() {
+      expect(getClientAuthData()).to.be.a('object');
+    });
+  });
+  
+  const clientAuthData = getClientAuthData();
+
+  // Test how we generate client authoriatization data
+  describe('getClientAuthData()', function() {
+    it('Should include the correct elements', function() {
+      const requiredKeys = ['authToken'];
+      expect(clientAuthData).to.include.keys(requiredKeys);
+      expect(clientAuthData.authToken).to.be.a('string');
+    });
+  });
+  
+});
 
 // INDIVIDUAL PROFILE DATA
 
@@ -278,3 +306,64 @@ describe('Application data', function() {
     });
   });
 });
+
+// Test the Session Data Generator
+
+describe('Session Data Generator', function() {
+  
+  // Test the function we use to generate session data
+  describe('generateSessionData()', function() {
+    it('Should exist as a function', function() {
+      expect(generateSessionData).to.be.not.null;
+      expect(generateSessionData).to.be.a('function');
+    });
+    it('Should return an object', function() {
+      expect(generateSessionData()).to.be.a('object');
+    });
+  });
+  
+  // Create a sessionData object
+  const sessionData  = generateSessionData();
+  
+  // Test the structure of sessionData
+  describe('sessionData', function() {
+    
+    it('Should have the correct elements', function() {
+      const requiredKeys = ['TEST_ElementCounts','userAccount', 'indProfiles',
+        'orgProfiles', 'positions', 'applications'];
+      expect(sessionData).to.include.keys(requiredKeys);
+    });
+    
+    it('Each element should be the correct type', function() {
+      expect(sessionData.TEST_ElementCounts).to.be.a('object');
+      expect(sessionData.userAccount).to.be.a('array');
+      expect(sessionData.indProfiles).to.be.a('array');
+      expect(sessionData.orgProfiles).to.be.a('array');
+      expect(sessionData.positions).to.be.a('array');
+      expect(sessionData.applications).to.be.a('array');
+    });
+    
+    it('The element counts should be within range', function() {
+      const randCountKeys = ['indProfiles','orgProfiles','positions',
+        'applications'];
+      const countVars = sessionData.TEST_ElementCounts;
+      expect(countVars.userAccount).to.equal(1);
+      randCountKeys.forEach(function(count) {
+        expect(countVars[count]).to.be.a('number');
+        expect(countVars[count]).to.be.at.least(1);
+        expect(countVars[count]).to.be.at.most(10);
+      });
+    });
+    
+    
+    it('Each element should have the correct length', function() {
+      expect(Object.keys(sessionData.TEST_ElementCounts).length).to.equal(5);
+      const countVars = sessionData.TEST_ElementCounts;
+      Object.keys(countVars).forEach(function(element) {
+        expect(sessionData[element].length).to.equal(countVars[element]);
+      });
+    });
+  });
+  
+  
+})
