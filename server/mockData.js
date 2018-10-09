@@ -4,85 +4,47 @@
 const faker = require('faker');
 
 
-// DEV DATA OBJECTS
 
-const MOCK_USER_ACCOUNT = {
-  authToken: faker.random.uuid(),
-  indProfile: '',
-  orgProfiles: []
-};
-
-// For generating up to 5 professional and service experience objects
-const profCount = Math.floor(Math.random() * 5);
-const servCount = Math.floor(Math.random() * 5);
-
-const MOCK_IND_PROFILE = {
-    id: faker.random.uuid(),
-    name: {
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName()
-    },
-    contact: {
-      phone: faker.phone.phoneNumber(),
-      email: faker.internet.email()
-    },
-    summary: faker.lorem.paragraph(),
-    profExp: generatePositions(profCount),
-    servExp: generatePositions(servCount),
-    commLevels: {
-      time: faker.random.number(),
-      skills: faker.lorem.sentence(),
-      network: faker.random.boolean(),
-      money: faker.random.number()
-    }
-};
-
-// For generating up to 5 organizational activities
-const actCount = Math.floor(Math.random() * 5);
-
-const MOCK_ORG_PROFILE = {
-  id: faker.random.uuid(),
-  name: faker.company.companyName(),
-  contact: {
-    phone: faker.phone.phoneNumber(),
-    email: faker.internet.email()
-  },
-  summary: faker.lorem.paragraph(),
-  activities: generateActivities(actCount),
-  commLevels: {
-    time: faker.random.number(),
-    skills: faker.lorem.sentence(),
-    network: faker.random.boolean(),
-    money: faker.random.number()
-  }
-};
-
-const MOCK_POSITION = {
-  id: faker.random.uuid(),
-  org_id: faker.random.uuid(),
-  title: faker.lorem.sentence(),
-  description: faker.lorem.paragraph()
-};
-
-const MOCK_APPLICATION = {
-  id: faker.random.uuid(),
-  indProf_id: faker.random.uuid(),
-  pos_id: faker.random.uuid(),
-  date: faker.date.recent(),
-  message: faker.lorem.paragraph(),
-  status: faker.random.number()
-};
-
-
-// Data functions
+/*
 
 function getClientAuthData() {
  
+  const MOCK_USER_ACCOUNT = {
+    authToken: faker.random.uuid(),
+    indProfile: '',
+    orgProfiles: []
+  };
+
  return MOCK_USER_ACCOUNT;
   
 }
 
 function getIndividualProfile() {
+
+  // For generating up to 5 professional and service experience objects
+  const profCount = Math.floor(Math.random() * 5);
+  const servCount = Math.floor(Math.random() * 5);
+  
+  const MOCK_IND_PROFILE = {
+      id: faker.random.uuid(),
+      name: {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName()
+      },
+      contact: {
+        phone: faker.phone.phoneNumber(),
+        email: faker.internet.email()
+      },
+      summary: faker.lorem.paragraph(),
+      profExp: generatePositions(profCount),
+      servExp: generatePositions(servCount),
+      commLevels: {
+        time: faker.random.number(),
+        skills: faker.lorem.sentence(),
+        network: faker.random.boolean(),
+        money: faker.random.number()
+      }
+  };
 
   return MOCK_IND_PROFILE;
 
@@ -90,18 +52,54 @@ function getIndividualProfile() {
 
 function getOrganizationProfile() {
   
+  // For generating up to 5 organizational activities
+  const actCount = Math.floor(Math.random() * 5);
+  
+  const MOCK_ORG_PROFILE = {
+    id: faker.random.uuid(),
+    name: faker.company.companyName(),
+    contact: {
+      phone: faker.phone.phoneNumber(),
+      email: faker.internet.email()
+    },
+    summary: faker.lorem.paragraph(),
+    activities: generateActivities(actCount),
+    commLevels: {
+      time: faker.random.number(),
+      skills: faker.lorem.sentence(),
+      network: faker.random.boolean(),
+      money: faker.random.number()
+    }
+  };
+
   return MOCK_ORG_PROFILE;
   
 }
 
 function getPosition() {
   
+  const MOCK_POSITION = {
+    id: faker.random.uuid(),
+    org_id: faker.random.uuid(),
+    title: faker.lorem.sentence(),
+    description: faker.lorem.paragraph()
+  };
+  
   return MOCK_POSITION;
   
 }
 
 function getApplication() {
-  
+
+  const MOCK_APPLICATION = {
+    id: faker.random.uuid(),
+    indProf_id: faker.random.uuid(),
+    pos_id: faker.random.uuid(),
+    date: faker.date.recent(),
+    message: faker.lorem.paragraph(),
+    status: faker.random.number()
+  };
+
   return MOCK_APPLICATION;
   
 }
@@ -185,9 +183,19 @@ function generateSessionData() {
   }
   
   // Build Links between certain elements
-  sessionData.userAccount.indProfile = sessionData.indProfiles[0].id;
-  
-  sessionData.userAccount.orgProfiles.push(sessionData.orgProfiles[0].id);
+    // Link userAccount to first indProfile
+    sessionData.userAccount.indProfile = sessionData.indProfiles[0].id;
+
+    // Link userAccount to at least one of the orgProfiles
+    let orgIds = [];
+    
+    sessionData.orgProfiles.forEach(profile => {
+      orgIds.push(profile.id);
+    });
+    
+    // Select random number of orgs
+    const orgSelCount = Math.floor(Math.random() * orgIds.length);
+    sessionData.userAccount.orgProfiles = orgIds.slice(0,orgSelCount);
 
   return sessionData;
   
@@ -206,3 +214,5 @@ module.exports = {
   getApplication,
   generateSessionData
 };
+
+*/

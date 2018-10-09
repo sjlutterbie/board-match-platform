@@ -15,6 +15,8 @@ const { getClientAuthData, getIndividualProfile, getOrganizationProfile,
         getPosition, getApplication,
         generateSessionData} = require('../server/mockData');
 
+
+/*
 // CLIENT AUTHORIZATION DATA
 
 describe('User Authorization Data', function() {
@@ -371,23 +373,56 @@ describe('Session Data Generator', function() {
     });
   });
   
-  it('The elements should be correctly linked for testing purposes', function() {
+  describe('The elements should be correctly linked for testing purposes', function() {
     
     // The userAccount should be associated with an indProfile
       // Convenience variables
         const userAccount = sessionData.userAccount;
         const indProfiles = sessionData.indProfiles;
         const orgProfiles = sessionData.orgProfiles;
+          let orgIds = [];
+          orgProfiles.forEach(function(profile){
+            orgIds.push(profile.id);
+          });
         const positions = sessionData.positions;
         const applications = sessionData.applications;
         
-        // userAccount should be linked with the first indProfile
-        expect(userAccount.indProfile).to.equal(indProfiles[0].id);
+        it('userAccount should link with one indProfile', function() {
+          expect(userAccount.indProfile).to.equal(indProfiles[0].id);
+        });
+
+        it('userAccount should link with at least one orgProfile', function() {
+          expect(userAccount.orgProfiles.length).to.be.at.least(1);
+          
+          // Check each orgProfile <-> userAccount link
+          userAccount.orgProfiles.forEach(function(profile) {
+            
+            // Each profile should be a valid orgId
+            expect(orgIds).to.include(profile);
+            
+            // Each Org should link back to the userAccount
+            const tempOrg = orgProfiles.find(function(org) {
+              return org.id === profile;
+            });
+            
+
+            
+          });
+          
+          // The selected orgs should link back to the userAccount
+          userAccount.orgProfiles.forEach
+          
+        });
         
-        // userAccount should be linked with at least one profile
-        expect(userAccount.orgProfiles.length).to.be.at.least(1);
+        
+        
+        
+        it('')
+
         
 
-  })
+  });
   
 })
+
+*/
