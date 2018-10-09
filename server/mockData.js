@@ -3,216 +3,26 @@
 
 const faker = require('faker');
 
-
-
-/*
-
-function getClientAuthData() {
- 
-  const MOCK_USER_ACCOUNT = {
-    authToken: faker.random.uuid(),
-    indProfile: '',
-    orgProfiles: []
-  };
-
- return MOCK_USER_ACCOUNT;
+function createUserAccount() {
   
-}
-
-function getIndividualProfile() {
-
-  // For generating up to 5 professional and service experience objects
-  const profCount = Math.floor(Math.random() * 5);
-  const servCount = Math.floor(Math.random() * 5);
-  
-  const MOCK_IND_PROFILE = {
-      id: faker.random.uuid(),
-      name: {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName()
-      },
-      contact: {
-        phone: faker.phone.phoneNumber(),
-        email: faker.internet.email()
-      },
-      summary: faker.lorem.paragraph(),
-      profExp: generatePositions(profCount),
-      servExp: generatePositions(servCount),
-      commLevels: {
-        time: faker.random.number(),
-        skills: faker.lorem.sentence(),
-        network: faker.random.boolean(),
-        money: faker.random.number()
-      }
-  };
-
-  return MOCK_IND_PROFILE;
-
-}
-
-function getOrganizationProfile() {
-  
-  // For generating up to 5 organizational activities
-  const actCount = Math.floor(Math.random() * 5);
-  
-  const MOCK_ORG_PROFILE = {
+  const userAccount = {
     id: faker.random.uuid(),
-    name: faker.company.companyName(),
-    contact: {
-      phone: faker.phone.phoneNumber(),
-      email: faker.internet.email()
-    },
-    summary: faker.lorem.paragraph(),
-    activities: generateActivities(actCount),
-    commLevels: {
-      time: faker.random.number(),
-      skills: faker.lorem.sentence(),
-      network: faker.random.boolean(),
-      money: faker.random.number()
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    relations: {
+      indProfile: '',
+      orgProfiles: []
     }
   };
-
-  return MOCK_ORG_PROFILE;
   
-}
-
-function getPosition() {
-  
-  const MOCK_POSITION = {
-    id: faker.random.uuid(),
-    org_id: faker.random.uuid(),
-    title: faker.lorem.sentence(),
-    description: faker.lorem.paragraph()
-  };
-  
-  return MOCK_POSITION;
-  
-}
-
-function getApplication() {
-
-  const MOCK_APPLICATION = {
-    id: faker.random.uuid(),
-    indProf_id: faker.random.uuid(),
-    pos_id: faker.random.uuid(),
-    date: faker.date.recent(),
-    message: faker.lorem.paragraph(),
-    status: faker.random.number()
-  };
-
-  return MOCK_APPLICATION;
-  
-}
-
-  // HELPER FUNCTIONS
-  
-  function generatePositions(count) {
-    
-    let positions = [];
-    
-    for (let i = 0; i < count; i++) {
-      positions.push({
-          id: faker.random.uuid(),
-          org: faker.company.companyName(),
-          position: faker.name.jobType(),
-          startYear: faker.random.alphaNumeric(4),
-          endYear: faker.random.alphaNumeric(4)
-      });
-    }
-    
-    return positions;
-  }
-  
-  function generateActivities(count) {
-    
-    let activities = [];
-    
-    for(let i=0; i < count; i++) {
-      activities.push({
-        id: faker.random.uuid(),
-        name: faker.lorem.sentence(),
-        summary: faker.lorem.paragraph()
-      });
-    }
-    
-    return activities;
-    
-  }
-  
-// SESSION BUILDER FUNCTION
-
-function generateSessionData() {
-  
-  // Initiate data object
-  const sessionData = {
-    TEST_ElementCounts: {},
-    userAccount: {},
-    indProfiles: [],
-    orgProfiles: [],
-    positions: [],
-    applications: []
-    
-  };
-  
-  // Create counter variables
-  sessionData.TEST_ElementCounts = {
-    userAccount: 1,
-    indProfiles: Math.floor(Math.random() * 10) + 1,
-    orgProfiles: Math.floor(Math.random() * 10) + 1,
-    positions: Math.floor(Math.random() * 10) + 1,
-    applications: Math.floor(Math.random() * 10) + 1
-  };
-
-  // Generate data
-  sessionData.userAccount = getClientAuthData();
-  
-  for(let i = 0; i < sessionData.TEST_ElementCounts.indProfiles; i++) {
-    sessionData.indProfiles.push(getIndividualProfile());
-  }
-  
-  for(let i = 0; i < sessionData.TEST_ElementCounts.orgProfiles; i++) {
-    sessionData.orgProfiles.push(getOrganizationProfile());
-  }
-  
-  for(let i=0; i < sessionData.TEST_ElementCounts.positions; i++) {
-    sessionData.positions.push(getPosition());
-  }
-  
-  for(let i=0; i < sessionData.TEST_ElementCounts.applications; i++) {
-    sessionData.applications.push(getApplication());
-  }
-  
-  // Build Links between certain elements
-    // Link userAccount to first indProfile
-    sessionData.userAccount.indProfile = sessionData.indProfiles[0].id;
-
-    // Link userAccount to at least one of the orgProfiles
-    let orgIds = [];
-    
-    sessionData.orgProfiles.forEach(profile => {
-      orgIds.push(profile.id);
-    });
-    
-    // Select random number of orgs
-    const orgSelCount = Math.floor(Math.random() * orgIds.length);
-    sessionData.userAccount.orgProfiles = orgIds.slice(0,orgSelCount);
-
-  return sessionData;
-  
+  return userAccount;
 }
 
 
 
+// Module exports
 
 module.exports = {
-  getClientAuthData,
-  getIndividualProfile,
-  getOrganizationProfile,
-  generatePositions,
-  generateActivities,
-  getPosition,
-  getApplication,
-  generateSessionData
+  createUserAccount
+  
 };
-
-*/

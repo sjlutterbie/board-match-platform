@@ -10,10 +10,119 @@ const chai = require('chai');
 // Simplify expect functions
 const expect = chai.expect;
 
-const { getClientAuthData, getIndividualProfile, getOrganizationProfile,
-        generatePositions, generateActivities,
-        getPosition, getApplication,
-        generateSessionData} = require('../server/mockData');
+const { createUserAccount } = require('../server/mockData');
+
+// USER ACCOUNT
+
+describe('User account creation', function() {
+  
+  describe('The POSTuserAccount()', function() {
+    it('Should exist', function() {
+      expect(createUserAccount).to.not.be.undefined;  
+    });
+    it('Should return an object', function() {
+      expect(createUserAccount()).to.be.a('object');
+    });
+  });
+  
+  // Create a userAccount
+  const userAccount = createUserAccount();
+  
+  describe('The userAccount object', function() {
+    it('Should have the correct keys', function() {
+      const requiredKeys = ['id', 'email', 'password','relations'];
+      expect(userAccount).to.include.keys(requiredKeys);
+    });
+    it('Each element should be the correct type', function() {
+      expect(userAccount.id).to.be.a('string');
+      expect(userAccount.email).to.be.a('string');
+      expect(userAccount.password).to.be.a('string');
+      expect(userAccount.relations).to.be.a('object');
+        // Test relations structure  
+        const requiredKeys = ['indProfile', 'orgProfiles'];
+        expect(userAccount.relations).to.include.keys(requiredKeys);
+          expect(userAccount.relations.indProfile).to.be.a('string');
+          expect(userAccount.relations.orgProfiles).to.be.a('array');
+    });
+  });
+  
+  
+  
+  
+});
+
+
+
+  // id: uuid
+  // email: string
+  // password: string
+  // relations:
+    // indProfileId: string
+    // orgProfileIds: array
+
+// INDIVIDUAL PROFILES
+  // id: uuid
+  // overview: object
+    // firstName: String
+    // lastName: String
+    // email: String
+    // phone: String
+    // headline: String
+  // linkedIn:
+    // profileURL: string
+  // experience: object
+    // Each:
+      // type: string (profiessional | service | education/training)
+      // organization: string
+      // title: string
+      // startYear: string
+      // endYear: string
+  // relations:
+    // userAccount: array (link to creator userAccount.id)
+    // applications: array
+      // Each: string (linked after all profiles created)
+
+
+
+
+
+// ORGANIZATION PROFILES
+  // overview: object
+    // name: string
+    // website: string
+    // email: string
+    // phone: string
+    // summary: string
+  // activities: array
+    // Each:
+      // name: string
+      // description: string
+  // relations: array
+    // userAccount: array (link to creator userAccount.id)
+      // Each: string
+    // positions: array
+    
+          
+        
+
+// POSITIONS
+
+// APPLICATIONS
+
+
+
+
+
+
+// Create 3 user accounts. The first userAccount ID is set to "TESTER"
+  // Each account has one indProfile
+  // Each account has 1-3 orgProfiles
+    // Each orgProfile has 1-3 positions
+    // Each position has 1-5 applications
+      // Each application has 1 indProfile
+      // There's a 25% chance the indProfile set to "TESTER"    
+  
+
 
 
 /*
