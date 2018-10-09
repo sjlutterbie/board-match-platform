@@ -10,55 +10,85 @@ const chai = require('chai');
 // Simplify expect functions
 const expect = chai.expect;
 
-const { createUserAccount } = require('../server/mockData');
+const mockData = require('../server/mockData');
 
 // USER ACCOUNT
 
 describe('User account creation', function() {
   
-  describe('The POSTuserAccount()', function() {
+  describe('createUserAccount()', function() {
     it('Should exist', function() {
-      expect(createUserAccount).to.not.be.undefined;  
+      expect(mockData.createUserAccount).to.not.be.undefined;  
     });
     it('Should return an object', function() {
-      expect(createUserAccount()).to.be.a('object');
+      expect(mockData.createUserAccount()).to.be.a('object');
     });
   });
   
   // Create a userAccount
-  const userAccount = createUserAccount();
+  const userAccount = mockData.createUserAccount();
   
   describe('The userAccount object', function() {
     it('Should have the correct keys', function() {
       const requiredKeys = ['id', 'email', 'password','relations'];
-      expect(userAccount).to.include.keys(requiredKeys);
+      expect(userAccount).to.have.keys(requiredKeys);
     });
-    it('Each element should be the correct type', function() {
+    it('Each element should have the correct structure', function() {
       expect(userAccount.id).to.be.a('string');
       expect(userAccount.email).to.be.a('string');
       expect(userAccount.password).to.be.a('string');
       expect(userAccount.relations).to.be.a('object');
         // Test relations structure  
         const requiredKeys = ['indProfile', 'orgProfiles'];
-        expect(userAccount.relations).to.include.keys(requiredKeys);
+        expect(userAccount.relations).to.have.keys(requiredKeys);
           expect(userAccount.relations.indProfile).to.be.a('string');
           expect(userAccount.relations.orgProfiles).to.be.a('array');
     });
   });
+});
+
+// INDIVIDUAL PROFILE
+
+describe('Individual profile creation', function() {
   
+  describe('createIndProfile()', function() {
+    it('Should exist', function() {
+      expect(mockData.createIndProfile).to.not.be.undefined;
+    });
+    
+    it('Should return an object', function() {
+      expect(mockData.createIndProfile()).to.be.a('object');
+    });
+  });
   
-  
+  describe('The indProfile object', function() {
+    
+    // Create an indProfile object
+    const indProfile = mockData.createIndProfile();
+    
+    it('Should have the correct elements', function() {
+      const requiredKeys = ['id', 'overview', 'linkedIn', 'experience',
+        'relations'];
+      expect(indProfile).to.have.keys(requiredKeys);
+    });
+    
+    it('Each element should have the correct structure', function() {
+      expect(indProfile.id).to.be.a('string');
+      expect(indProfile.overview).to.be.a('string');
+      expect(indProfile.linkedIn).to.be.a('string');
+      expect(indProfile.experience).to.be.a('array');
+      expect(indProfile.relations).to.be.a('object');
+        expect(indProfile.relations.userAccount).to.be.a('string');
+        expect(indProfile.relations.applications).to.be.a('array');
+    });
+    
+    
+  });
   
 });
 
 
 
-  // id: uuid
-  // email: string
-  // password: string
-  // relations:
-    // indProfileId: string
-    // orgProfileIds: array
 
 // INDIVIDUAL PROFILES
   // id: uuid
