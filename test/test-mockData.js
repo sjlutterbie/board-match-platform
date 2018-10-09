@@ -205,27 +205,47 @@ describe('Organization Profile Creation', function(){
   
 });
 
-
-
-  // overview: object
-    // name: string
-    // website: string
-    // email: string
-    // phone: string
-    // summary: string
-  // activities: array
-    // Each:
-      // name: string
-      // description: string
-  // relations: array
-    // userAccount: array (link to creator userAccount.id)
-      // Each: string
-    // positions: array
-    
-          
-        
-
 // POSITIONS
+
+describe('Positions builder', function() {
+  
+  describe('createPosition', function() {
+    it('Should exist', function() {
+      expect(mockData.createPosition).to.not.be.undefined;
+    });
+    it('Should return an object', function() {
+      expect(mockData.createPosition()).to.be.a('object');
+    });
+  });
+  
+  // Create object
+  const position = mockData.createPosition();
+  const positionKeys = ['id', 'title', 'description', 'dateCreated', 'isPublic',
+    'relations'];
+  
+  describe('The position object', function() {
+    it('Should have the required elements', function() {
+      expect(position).to.have.keys(positionKeys);
+    });
+    
+    it('Each element should have the correct structure', function() {
+      expect(position.id).to.be.a('string');
+        expect(position.id.length).to.be.gt(0);
+      expect(position.title).to.be.a('string');
+        expect(position.title.length).to.be.gt(0);
+      expect(position.description).to.be.a('string');
+      expect(position.dateCreated).to.be.a('date');
+      expect(position.isPublic).to.be.a('boolean');
+      expect(position.relations).to.be.a('object');
+        expect(position.relations).to.have.keys(['organization', 'applications']);
+          expect(position.relations.organization).to.be.a('string');
+          expect(position.relations.applications).to.be.a('array');
+    });
+    
+  });
+  
+});
+
 
 // APPLICATIONS
 
@@ -355,7 +375,38 @@ describe("sessionData builder", function() {
     );
   });
   
-  
+  describe('sessionData.positions', function () {
+    
+    // Convenience variable
+    const positions = sessionData.positions;
+    
+    it('Should include at least one position', function() {
+      expect(positions.length).to.be.gte(1);
+    });
+    it('Should create 0-5 positions per orgProfile', function() {
+      expect(positions.length).to.be.lte(sessionData.orgProfiles.length * 5);
+    });
+    it('Each position should relate to one orgProfile', function() {
+      positions.forEach(function(position) {
+        expect(position.relations.organization.length).to.be.gt(0); 
+        // Extract list of orgIds
+        const orgIds = [];
+        for(let i = 0; i < sessionData.orgProfiles.length; i++) {
+          orgIds.push(sessionData.orgProfiles[i].id);
+        }
+        expect(orgIds).to.include(position.relations.organization);
+      });
+    });
+    it('And each orgProfile should relate back to the position', function() {
+      positions.forEach(function(position) {
+        const tempOrg = sessionData.orgProfiles.find(function(org) {
+          return org.id === position.relations.organization;
+        });
+        expect(tempOrg.relations.positions).to.include(position.id);
+      });
+    });
+  });
+
   
 });
 

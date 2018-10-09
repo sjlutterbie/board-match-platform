@@ -123,22 +123,26 @@ function createOrgProfile(userAccountId) {
     
   }
 
+// POSITIONS
 
-  // overview: object
-    // name: string
-    // website: string
-    // email: string
-    // phone: string
-    // summary: string
-  // activities: array
-    // Each:
-      // name: string
-      // description: string
-  // relations: array
-    // userAccount: array (link to creator userAccount.id)
-      // Each: string
-    // positions: array
-    
+function createPosition() {
+  
+  const position = {
+    id: faker.random.uuid(),
+    title: faker.name.jobTitle(),
+    description: faker.lorem.paragraph(),
+    dateCreated: faker.date.recent(),
+    isPublic: Math.random() > .5 ? true : false,
+    relations: {
+      organization: '',
+      applications: []
+    }
+  };
+  
+
+  return position;
+  
+}
 
 
 // BUILD SESSION DATA
@@ -209,6 +213,37 @@ function buildSessionData() {
         .relations.orgProfiles.push(tempProfile.id);
       });
     }
+    
+  // Generate 0-5 positions per orgProfile
+    for (let i = 0; i < (orgProfCount * 5); i++){
+      
+      const tempPosition = createPosition();
+      
+      // Relate tempPosition with a random Organization
+        // Collect Org IDs
+        const orgIds = [];
+        for(let i = 0; i < sessionData.orgProfiles.length; i++) {
+          orgIds.push(sessionData.orgProfiles[i].id);
+        }
+        
+        // Assign random orgId to position
+        const tempOrgId = orgIds[Math.floor(Math.random() * orgIds.length)];
+        
+        tempPosition.relations.organization = tempOrgId;
+        
+        // Relate the orgProfile back to the position
+        sessionData.orgProfiles.find(function(org) {
+          return org.id === tempOrgId;
+        }).relations.positions.push(tempPosition.id);
+
+      //console.log(tempPosition);
+      
+      sessionData.positions.push(tempPosition);
+      
+      
+      
+    }
+  
 
   return sessionData;
   
@@ -224,6 +259,7 @@ module.exports = {
     createExperience,
   createOrgProfile,
   buildSessionData,
-    createActivity
+    createActivity,
+  createPosition
   
 };
