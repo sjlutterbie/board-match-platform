@@ -15,7 +15,7 @@ const domBody = new JSDOM(
 const expect = chai.expect;
 
 //Load the module
-const sideBarMenuView = require('../client/views/sideBarMenu');
+const sideBarMenuView = require('../client/views/tabBarMenu');
 
 describe('SideBarMenu View', function() {
   

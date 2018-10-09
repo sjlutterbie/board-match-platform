@@ -2,7 +2,7 @@
 
 function buildView() {
   
-  return `<p>This is the SideBarMenu view</p>`;
+  return `<p>This is the tabMenu view</p>`;
 }
 
 

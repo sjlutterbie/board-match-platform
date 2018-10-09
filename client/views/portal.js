@@ -2,7 +2,7 @@
 
 // Load required views
 const headerMenuView = require('./headerMenu');
-const sideBarMenuView = require('./sideBarMenu');
+const tabBarMenuView = require('./tabBarMenu');
 const dashboardView = require('./dashboard');
 
 function buildView() {
@@ -36,8 +36,8 @@ function buildView() {
           </nav>
         </header>
         
-        <nav class="sidebar-nav">
-          ${sideBarMenuView.buildView()}
+        <nav class="tab-nav">
+          ${tabBarMenuView.buildView()}
         </nav>
         
         <main role="main">
