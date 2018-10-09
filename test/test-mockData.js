@@ -310,6 +310,53 @@ describe("sessionData builder", function() {
         }
       );
   });
+  
+  describe('sessionData.orgProfiles', function() {
+    
+    it('Should contain 1 to 10 elements', function () {
+      expect(sessionData.orgProfiles.length).to.be.gte(1);
+      expect(sessionData.orgProfiles.length).to.be.lte(10);
+    });
+    
+    // Convenience variable
+    const orgProfiles = sessionData.orgProfiles;
+    
+    it('The first org should relate to userAccount TESTER', function() {
+      expect(orgProfiles[0].relations.userAccounts[0]).to.equal('TESTER');
+    });
+    it('Every relations.userAccounts[0] should relate to a userAccount',
+      function() {
+        // Extract userAccount.ids
+        const userIds = [];
+        sessionData.userAccounts.forEach(function(account) {
+          userIds.push(account.id);
+        });
+        // Test the profiles
+        sessionData.orgProfiles.forEach(function(profile) {
+          expect(userIds).to.include(profile.relations.userAccounts[0]);
+        });    
+      }
+    );
+    it('IF an orgProfile links to one or more userAccounts, '+
+        'the userAccounts should link back to the orgProfile',
+        function() {
+          sessionData.orgProfiles.forEach(function(orgProfile) {
+            orgProfile.relations.userAccounts.forEach(function(userAccountId) {
+              // Find the userAccount
+              const userAccount = sessionData.userAccounts.find(
+                function(userAccount) {
+                  return userAccount.id === userAccountId;
+                }
+              );
+              expect(userAccount.relations.orgProfiles).to.include(orgProfile.id);
+            });
+          });
+        }
+    );
+  });
+  
+  
+  
 });
 
 

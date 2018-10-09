@@ -83,7 +83,7 @@ function createIndProfile(userAccountId) {
   
 // ORGANIZATION PROFILE
 
-function createOrgProfile() {
+function createOrgProfile(userAccountId) {
   
   const orgProfile = {
     id: faker.random.uuid(),
@@ -96,7 +96,7 @@ function createOrgProfile() {
     },
     activities: [],
     relations: {
-      userAccounts: [],
+      userAccounts: [userAccountId],
       positions: []
     }
   };
@@ -106,9 +106,7 @@ function createOrgProfile() {
   for(let i = 0; i < actCount; i++) {
     orgProfile.activities.push(createActivity());
   }
-  
-  console.log(orgProfile);
-  
+
   return orgProfile;
   
 }
@@ -163,28 +161,55 @@ function buildSessionData() {
     sessionData.userAccounts[0].id = "TESTER";
   
   // Generate 1-10 indProfiles
-  const indProfCount = Math.floor(Math.random() * 10) + 1;
-  // Set 1st userId to TESTER, remainder to random userAccounts
-  const userIds = ['TESTER'];  
-
-  for(let i = 1; i < indProfCount; i++) {
-    userIds.push(sessionData.userAccounts[i].id);
-  }  
+    const indProfCount = Math.floor(Math.random() * 10) + 1;
+    // Set 1st userId to TESTER, remainder to random userAccounts
+    const userIds = ['TESTER'];  
   
-  // Generate indProfiles
-  for (let i = 0; i < indProfCount; i++) {
-    const tempProfile = createIndProfile(userIds[i]);
-    sessionData.indProfiles.push(tempProfile);
-    
-    // if tempProfile is associated with a userAccount
-    if (tempProfile.relations.userAccount != '') {
-      // Relate the userAccount to the indProfile
-      sessionData.userAccounts.find(function(account) {
-        return account.id === tempProfile.relations.userAccount;
-      }).relations.indProfile = tempProfile.id;
+    for(let i = 1; i < indProfCount; i++) {
+      userIds.push(sessionData.userAccounts[i].id);
+    }  
+  
+    // Generate indProfiles
+    for (let i = 0; i < indProfCount; i++) {
+      const tempProfile = createIndProfile(userIds[i]);
+      sessionData.indProfiles.push(tempProfile);
+      
+      // if tempProfile is associated with a userAccount
+      if (tempProfile.relations.userAccount != '') {
+        // Relate the userAccount to the indProfile
+        sessionData.userAccounts.find(function(account) {
+          return account.id === tempProfile.relations.userAccount;
+        }).relations.indProfile = tempProfile.id;
+      }
     }
-  }
   
+  // Generate 1-10 orgProfiles
+    const orgProfCount = Math.floor(Math.random() * 10) + 1;
+    
+    // Set 1st userAccount to TESTER, remainder to random userAccounts
+    const userIds_Org = ['TESTER'];
+    
+    for(let i = 0; i < orgProfCount-1; i++) {
+      userIds_Org.push(sessionData.userAccounts[i].id);
+    }
+
+    // Generate orgProfiles
+    for (let i = 0; i < orgProfCount; i++) {
+      const tempProfile = createOrgProfile(userIds_Org[i]);
+      sessionData.orgProfiles.push(tempProfile);
+      
+      // For each userAccount the tempProfile relates with
+      tempProfile.relations.userAccounts.forEach(function(userAccountId) {
+        // Relate that userAccount back to the orgProfile
+        // Find the user account
+        sessionData.userAccounts.find( function(userAccount) {
+          return userAccount.id === userAccountId;
+        })
+        // And back-link it
+        .relations.orgProfiles.push(tempProfile.id);
+      });
+    }
+
   return sessionData;
   
 }
