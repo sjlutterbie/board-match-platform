@@ -249,6 +249,39 @@ describe('Positions builder', function() {
 
 // APPLICATIONS
 
+describe('Application creation', function() {
+  
+  describe('createApplication()', function() {
+    it('Should exist', function() {
+      expect(mockData.createApplication).to.not.be.undefined; 
+    });
+    it('Should return an object',function() {
+      expect(mockData.createApplication()).to.be.a('object');
+    });
+  });
+  
+  describe('The application object', function() {
+    
+    // Create the object
+    const application = mockData.createApplication();
+    const applicationKeys = ['coverMessage', 'dateSubmitted', 'relations'];
+    
+    it('Should have the necessary elements', function() {
+      expect(application).to.have.keys(applicationKeys);
+    });
+    
+    it('Each element should have the correct structure', function() {
+      expect(application.coverMessage).to.be.a('string');
+      expect(application.dateSubmitted).to.be.a('date');
+      expect(application.relations).to.be.a('object');
+        expect(application.relations).have.keys('position', 'indProfile');
+          expect(application.relations.position).to.be.a('string');
+          expect(application.relations.indProfile).to.be.a('string');
+    });
+  });
+
+});
+
 // BUILD SESSION DATA
 
 describe("sessionData builder", function() {

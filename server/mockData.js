@@ -144,6 +144,23 @@ function createPosition() {
   
 }
 
+// APPLICATIONS
+
+function createApplication() {
+  
+  const application = {
+    coverMessage: faker.lorem.paragraph(),
+    dateSubmitted: faker.date.recent(),
+    relations: {
+      position: '',
+      indProfile: ''
+    }
+  };
+  
+  return application;
+  
+}
+
 
 // BUILD SESSION DATA
 
@@ -260,6 +277,7 @@ module.exports = {
   createOrgProfile,
   buildSessionData,
     createActivity,
-  createPosition
+  createPosition,
+  createApplication
   
 };
