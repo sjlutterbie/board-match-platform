@@ -123,83 +123,90 @@ describe('Individual profile creation', function() {
     });
   });
   
-  describe('Backlinking indProfile to userAccount', function() {
+
+});
+
+// ORGANIZATION PROFILES
+
+describe('Organization Profile Creation', function(){
+  
+  describe('createOrgProfile()', function() {
+    it('Should exist', function() {
+      expect(mockData.createOrgProfile).to.not.be.undefined; 
+    });
+    it('Should return an object', function() {
+      expect(mockData.createOrgProfile()).to.be.a('object');
+    });
+  });
+  
+  describe('Helper function: createActivity()', function() {
     
-    describe('bl_indProfile2userAccount()', function() {
-      it('Should exist', function() {
-        expect(mockData.bl_indProfile2userAccount).to.not.be.undefined;
-      });
-      it('Should expect two strings of length > 0', function() {
-        const testCases = [
-          // Case structure: [arg1, arg2, pass Bool]
-          // Pass cases: Non-zero-length strings in both positions
-          ['String1', 'String2', true],
-          // Fail cases: One or more non-zero-length strings
-          ['String1', '', false],
-          ['', 'String2', false],
-          ['', '', false],
-          // Fail cases: One or more non-string arguments
-          [5, "String2", false],
-          ["String1", {}, false],
-          [[], mockData.createExperience, false]
-        ];
-        testCases.forEach(function(testCase) {
-          // If the test should pass...
-          if(testCase[2]) {
-            expect(
-              function() {
-                mockData.bl_indProfile2userAccount(testCase[0], testCase[1]);
-              }
-            ).to.not.throw();
-          // If the test should fail...
-          } else {
-            expect(
-              function() {
-                mockData.bl_indProfile2userAccount(testCase[0], testCase[1]);
-              }
-            ).to.throw();
-          }
+    it('Should exist', function() {
+      expect(mockData.createActivity).to.not.be.undefined;
+    });
+    it('Should return an object', function() {
+      expect(mockData.createActivity()).to.be.a('object');
+    });
+    
+    // Create an activity object
+    const activity = mockData.createActivity();
+    
+    describe('The activity object', function() {
+      
+      it('Should have the necessary elements', function() {
+        const activityKeys = ['name', 'description'];
+        expect(activity).to.have.keys(activityKeys);
+        activityKeys.forEach(function(key) {
+          expect(activity[key]).to.be.a('string');
+          expect(activity[key].length).to.be.gt(0);
         });
       });
-          
-      // TODO - FINISH THIS FUNCTION, GIVEN EXISTING DATA SPACE
-          
+      
+    });
+    
+    
+  });
+  
+  describe('The orgProfile Object', function() {
+    
+    // Create the object
+    const orgProfile = mockData.createOrgProfile();
+    
+    it('Should have the correct elements', function() {
+      const requiredKeys = ['id', 'overview', 'activities', 'relations'];
+      expect(orgProfile).to.have.keys(requiredKeys);
+    });
+    
+    it('Each element sholud have the same structure', function() {
+      expect(orgProfile.id).to.be.a('string');
+        expect(orgProfile.id.length).to.be.gt(0);
+      expect(orgProfile.overview).to.be.a('object');
+        const overviewKeys = ['name', 'website', 'email', 'phone', 'summary'];
+        expect(orgProfile.overview).to.have.keys(overviewKeys);
+        overviewKeys.forEach(function(key) {
+          expect(orgProfile.overview[key]).to.be.a('string');
+        });
+      expect(orgProfile.activities).to.be.a('array');
+      // If experience objects exist, confirm they have the right keys
+      orgProfile.activities.forEach(function(activity) {
+        const activityKeys = ['name', 'description'];
+        expect(activity).to.have.keys(activityKeys);
+      });
+      
+      expect(orgProfile.relations).to.be.a('object');
+        const relationsKeys = ['userAccounts', 'positions'];
+        expect(orgProfile.relations).to.have.keys(relationsKeys);
+          expect(orgProfile.relations.userAccounts).to.be.a('array');
+          expect(orgProfile.relations.positions).to.be.a('array');
     });
     
   });
+  
   
 });
 
 
 
-
-// INDIVIDUAL PROFILES
-  // id: uuid
-  // overview: object
-    // firstName: String
-    // lastName: String
-    // email: String
-    // phone: String
-    // headline: String
-  // linkedIn:
-    // profileURL: string
-  // experience: object
-    // Each:
-      // type: string (profiessional | service | education/training)
-      // organization: string
-      // title: string
-      // startYear: string
-      // endYear: string
-  // relations:
-    // userAccount: array (link to creator userAccount.id)
-    // applications: array
-      // Each: string (linked after all profiles created)
-
-
-
-
-
-// ORGANIZATION PROFILES
   // overview: object
     // name: string
     // website: string
@@ -291,16 +298,13 @@ describe("sessionData builder", function() {
           sessionData.indProfiles.forEach(function(indProfile) {
             if (indProfile.relations.userAccount != '') {
               const userAccountId = indProfile.relations.userAccount;
-              
               // Find the associated userAccount
               const userAccount = sessionData.userAccounts.find(
                 function(account) {
                   return account.id === userAccountId;
                 }
               );
-
               expect(userAccount.relations.indProfile).to.equal(indProfile.id);
-
             }
           });
         }

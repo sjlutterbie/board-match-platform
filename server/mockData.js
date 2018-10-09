@@ -81,52 +81,66 @@ function createIndProfile(userAccountId) {
     
   }
   
-  function bl_indProfile2userAccount(userAccountId, indProfileId) {
-    
-    // Validate arguments
-    if(typeof userAccountId != 'string') {
-      throw 'userAccountId is not a string';
+// ORGANIZATION PROFILE
+
+function createOrgProfile() {
+  
+  const orgProfile = {
+    id: faker.random.uuid(),
+    overview: {
+      name: faker.company.companyName(),
+      website: faker.internet.url(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber(),
+      summary: faker.lorem.paragraph()
+    },
+    activities: [],
+    relations: {
+      userAccounts: [],
+      positions: []
     }
-    if(userAccountId.length === 0 ) {
-      throw 'userAccountId has length 0';
-    }
-    if(typeof indProfileId != 'string') {
-      throw 'indProfileId is not a string';
-    }
-    if(indProfileId.length === 0) {
-      throw 'indProfileId has length 0';
-    }
-    
-    // TODO - FINISH THIS FUNCTION
-    
-    
-    return [userAccountId, indProfileId];
-     
-    
+  };
+  
+  // Create up to 5 activities
+  const actCount = Math.floor(Math.random() * 6);
+  for(let i = 0; i < actCount; i++) {
+    orgProfile.activities.push(createActivity());
   }
   
+  console.log(orgProfile);
+  
+  return orgProfile;
+  
+}
+
+  // Helper functions
+  function createActivity() {
+    
+    const activity = {
+      name: faker.company.catchPhrase(),
+      description: faker.lorem.paragraph()
+    };
+    
+    return activity;
+    
+  }
 
 
-  // id: uuid
   // overview: object
-    // firstName: String
-    // lastName: String
-    // email: String
-    // phone: String
-    // headline: String
-  // linkedIn:
-    // profileURL: string
-  // experience: object
+    // name: string
+    // website: string
+    // email: string
+    // phone: string
+    // summary: string
+  // activities: array
     // Each:
-      // type: string (profiessional | service | education/training)
-      // organization: string
-      // title: string
-      // startYear: string
-      // endYear: string
-  // relations:
+      // name: string
+      // description: string
+  // relations: array
     // userAccount: array (link to creator userAccount.id)
-    // applications: array
-      // Each: string (linked after all profiles created)
+      // Each: string
+    // positions: array
+    
 
 
 // BUILD SESSION DATA
@@ -168,11 +182,7 @@ function buildSessionData() {
       sessionData.userAccounts.find(function(account) {
         return account.id === tempProfile.relations.userAccount;
       }).relations.indProfile = tempProfile.id;
-
-      
     }
-    
-    
   }
   
   return sessionData;
@@ -187,7 +197,8 @@ module.exports = {
   createUserAccount,
   createIndProfile,
     createExperience,
-    bl_indProfile2userAccount,
-  buildSessionData
+  createOrgProfile,
+  buildSessionData,
+    createActivity
   
 };
