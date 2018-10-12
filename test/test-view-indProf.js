@@ -47,31 +47,5 @@ describe('Individual Profile View', function() {
       });
     });
   });
-  
-  // Test the buildOverview() function
-  describe('buildOverviewCard()', function() {
-    
-    it('Should exist', function() {
-      expect(indProfileView.buildOverviewCard).to.be.a('function');
-    });
-    
-    // Generate the card
-    const overviewCard = indProfileView.buildOverviewCard();
-    
-    it('Should return a string', function() {
-      expect(overviewCard).to.be.a('string');
-    });
-  });
-  
-  // Test the buildLinkedInCard() function
-  describe('buildLinkedInCard()', function() {
-    
-    it('Should be a function', function() {
-      expect(indProfileView.buildLinkedInCard).to.be.a('function');
-    });
-    
-  });
-  
-  
 });
 
