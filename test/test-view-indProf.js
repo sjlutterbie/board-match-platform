@@ -18,7 +18,7 @@ const domBody = new JSDOM(
 const indProfileView = require('../client/views/indProfile');
 
 describe('Individual Profile View', function() {
-  
+
   // Test the primary view function
   describe('indProfile.buildView()', function() {
     
@@ -33,24 +33,33 @@ describe('Individual Profile View', function() {
       expect(indProfViewContent).to.be.a('string');
     });
     
+    // Test the HTML the module injects
+    describe('indProfileView HTML structure', function() {
+  
+      it('Should inject the ouput', function() {
+        // Insert the HTML
+        domBody.innerHTML = indProfileView.buildView();
+        // Test  
+        expect(domBody.innerHTML)
+          .to.equal(indProfileView.buildView());
+        // Reset the DOM
+        domBody.innerHTML = '';
+      });
+    });
   });
   
-  // Test the HTML the module injects
-  describe('indProfileView HTML structure', function() {
+  // Test the buildOverview() function
+  describe('indProfileView.buildOverviewCard()', function() {
     
-    // Initiate a clean DOM
-    const _domBody = domBody;
-    
-    // Insert the HTML
-    _domBody.innerHTML = indProfileView.buildView();
-    
-    it('Should inject the ouput', function() {
-      expect(_domBody.innerHTML)
-        .to.equal(indProfileView.buildView());
+    it('Should exist', function() {
+      expect(indProfileView.buildOverviewCard).to.be.a('function');
     });
     
+    // Generate the card
+    const overviewCard = indProfileView.buildOverviewCard();
+    
+    it('Should return a string', function() {
+      expect(overviewCard).to.be.a('string');
+    });
   });
-  
-
-
 });
