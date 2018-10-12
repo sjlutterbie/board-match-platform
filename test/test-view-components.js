@@ -93,3 +93,81 @@ describe('Content Card component', function() {
     });  
   });
 });
+
+describe('Button component', function() {
+  
+  describe('buildButton()', function() {
+    
+    it('Should be a function', function() {
+      expect(vC.buildButton).to.be.a('function');
+    });
+    
+    it('Should return a string', function() {
+      expect(vC.buildButton()).to.be.a('string');
+    });
+    
+    it('Should have the expected HTML structure', function() {
+      // Insert into DOM
+      domBody.innerHTML = vC.buildButton();
+      // Test
+      expect(domBody.firstChild.nodeName).to.equal('BUTTON');
+      expect(domBody.firstChild.getAttribute('class')).to.equal('js-button');
+      // Reset DOM
+      domBody.innerHTML = '';
+    });
+    
+    describe('buildButton(labelString)', function() {
+      
+      it('Should have the expected HTML structure', function() {
+        const testData = ['', ' ', 'String'];
+        testData.forEach(function(testCase) {
+          // Insert into DOM
+          domBody.innerHTML = vC.buildButton(testCase);
+          // Test
+          expect(domBody.firstChild.innerHTML).to.equal(testCase);
+          // Reset test DOM
+          domBody.innerHTML = '';
+        });
+      });
+    });
+    
+    describe('buildButton(labelString, classes)', function() {
+      it('Should have the correct HTML structure', function() {
+        const testData = [
+          ['Case 1', ' '],
+          ['Case 2', 'class1'],
+          ['Case 3', 'class1 class2'], 
+          ['Case 4', ['class1']],
+          ['Case 5', ['class1', 'class2']]
+        ];
+        testData.forEach(function(testCase) {
+          // Insert into test DOM
+          domBody.innerHTML = vC.buildButton(testCase[0], testCase[1]);
+          // Test
+          let classes = '';
+          if (typeof testCase[1] === 'string') {
+            classes = testCase[1];
+          } else if (typeof testCase[1] === 'object') {
+            classes = testCase[1].join(' ').trim();
+          }
+          const classString = ('js-button ' + classes).trim();
+          // Test
+          expect(domBody.firstChild.innerHTML).to.equal(testCase[0]);
+          expect(domBody.firstChild.getAttribute('class')).to.equal(classString);
+          // Reset testDom
+          domBody.innerHTML = '';
+        });
+      });
+    });
+  });
+});
+
+describe('Handling [class1, class2...] as parameter', function() {
+  
+  describe('arrayToClassList()', function() {
+    it('Should be a function', function() {
+      // STOPPING POINT
+    });
+  });
+  
+});
