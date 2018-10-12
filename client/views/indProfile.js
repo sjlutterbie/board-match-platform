@@ -1,55 +1,34 @@
 'use strict';
 
-const vC = require('./components');
+const indCards = require('./indCards');
+const orgCards = require('./orgCards');
 
 function buildView() {
   
-  let outputHTML = buildOverviewCard();
+  // Initialize blank content
+  let outputHTML = '';
   
-  outputHTML = vC.buildCard(outputHTML, 
-                            ['ind-prof-overview', 'js-ind-prof-overview']
-               );
+  // Add Ind Cards
+  outputHTML += '<p>INDIVIDUAL CARDS</p>';
+  outputHTML += indCards.overviewCard();
+  outputHTML += indCards.linkedInCard();
+  outputHTML += indCards.additionalExperienceCard();
+  outputHTML += indCards.openPositionCard();
+  outputHTML += indCards.submittedAppCard();
+  
+  outputHTML += '<p>ORG CARDS</p>';
+  outputHTML += orgCards.overviewCard();
+  outputHTML += orgCards.openPositionCard();
+  outputHTML += orgCards.applicationsCard();
+  //Ad Org Cards
+  
 
+  // Render output
   return outputHTML;
 }
-
-function buildOverviewCard() {
-
-  let outputHTML = `
-    <h2>Overview</h2>
-    <p class="ind-profile-name">firstName lastName</p>
-    <p class="ind-profile-summary">Summary</p>
-    <p class="ind-profile-email"><a href="#">email</a></p>
-    <p class="ind-profile-phone"><a href="#">phone</a></p>
-    <button class="js-ind-prof-edit">Edit</button>
-  `.trim();
-
-  return outputHTML;
-  
-}
-
-function buildLinkedInCard() {
-  
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
-  buildView,
-  buildOverviewCard,
-  buildLinkedInCard
+  buildView
 };
