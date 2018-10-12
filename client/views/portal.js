@@ -3,7 +3,7 @@
 // Load required views
 const headerMenuView = require('./headerMenu');
 const tabBarMenuView = require('./tabBarMenu');
-const dashboardView = require('./dashboard');
+const indProfView = require('./indProfile');
 
 function buildView() {
   
@@ -41,7 +41,7 @@ function buildView() {
         </nav>
         
         <main role="main">
-          ${dashboardView.buildView()}
+          ${indProfView.buildView()}
         </main>
     
         <!-- Load jQuery -->

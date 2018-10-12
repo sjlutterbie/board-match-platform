@@ -15,7 +15,7 @@ const domBody = new JSDOM(
 
 
 // Load the view module
-const indProfileView = require('../client/views/individualProfile');
+const indProfileView = require('../client/views/indProfile');
 
 describe('Individual Profile View', function() {
   
