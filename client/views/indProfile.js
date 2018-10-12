@@ -28,6 +28,10 @@ function buildOverviewCard() {
   
 }
 
+function buildLinkedInCard() {
+  
+  
+}
 
 
 
@@ -46,5 +50,6 @@ function buildOverviewCard() {
 
 module.exports = {
   buildView,
-  buildOverviewCard
+  buildOverviewCard,
+  buildLinkedInCard
 };

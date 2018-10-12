@@ -20,10 +20,10 @@ const indProfileView = require('../client/views/indProfile');
 describe('Individual Profile View', function() {
 
   // Test the primary view function
-  describe('indProfile.buildView()', function() {
+  describe('buildView()', function() {
     
-    it('Should exist', function(){
-      expect(indProfileView.buildView).to.not.be.undefined;
+    it('Should be a function', function(){
+      expect(indProfileView.buildView).to.be.a('function');
     });
     
     // Generate the view
@@ -49,7 +49,7 @@ describe('Individual Profile View', function() {
   });
   
   // Test the buildOverview() function
-  describe('indProfileView.buildOverviewCard()', function() {
+  describe('buildOverviewCard()', function() {
     
     it('Should exist', function() {
       expect(indProfileView.buildOverviewCard).to.be.a('function');
@@ -62,4 +62,16 @@ describe('Individual Profile View', function() {
       expect(overviewCard).to.be.a('string');
     });
   });
+  
+  // Test the buildLinkedInCard() function
+  describe('buildLinkedInCard()', function() {
+    
+    it('Should be a function', function() {
+      expect(indProfileView.buildLinkedInCard).to.be.a('function');
+    });
+    
+  });
+  
+  
 });
+
