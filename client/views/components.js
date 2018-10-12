@@ -1,5 +1,7 @@
 'use strict';
 
+const { arrayToClassList } = require('../controllers/common');
+
 // CARD ELEMENT
 
 function buildCard(inputString='', classes='') {
@@ -10,8 +12,8 @@ function buildCard(inputString='', classes='') {
 
   
   // Handle array class lists
-  if (typeof classes === 'object') {
-    classes = classes.join(' ').trim();
+  if (Array.isArray(classes)) {
+    classes = arrayToClassList(classes);
   }
   
   // Clear up excess whitespace
@@ -25,9 +27,17 @@ function buildCard(inputString='', classes='') {
 
 // BUTTON ELEMENT
 
-function buildButton(labelString='') {
+function buildButton(labelString='', classes='') {
+  // Create a UI 'button' that can accept custom class lists
   
-  const htmlOutput = `<button class="js-button">${labelString}</button>`;
+  // Handle array class lists
+  if (Array.isArray(classes)) {
+    classes = arrayToClassList(classes);
+  }
+
+  classes = `js-button ${classes}`.trim();
+
+  const htmlOutput = `<button class="${classes}">${labelString}</button>`;
   
   // TODO: Insert array-to-class function
   

@@ -80,7 +80,7 @@ describe('Content Card component', function() {
         let classes = '';
         if (typeof testCase[1] === 'string') {
           classes = testCase[1];
-        } else if (typeof testCase[1] === 'object') {
+        } else if (Array.isArray(testCase[1])) {
           classes = testCase[1].join(' ').trim();
         }
         const classString = ('card js-card ' + classes).trim();
@@ -159,15 +159,8 @@ describe('Button component', function() {
         });
       });
     });
+
   });
+
 });
 
-describe('Handling [class1, class2...] as parameter', function() {
-  
-  describe('arrayToClassList()', function() {
-    it('Should be a function', function() {
-      // STOPPING POINT
-    });
-  });
-  
-});
