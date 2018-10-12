@@ -25,6 +25,7 @@ function buildView() {
         
         <!-- Custom styles -->
         <link rel="stylesheet" type="text/css" href="styles/layout.css">
+        <link rel="stylesheet" type="text/css" href="styles/typography.css">
         
       </head>
       

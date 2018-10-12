@@ -9,14 +9,14 @@ function buildView() {
   let outputHTML = '';
   
   // Add Ind Cards
-  outputHTML += '<p>INDIVIDUAL CARDS</p>';
+  outputHTML += '<h1>INDIVIDUAL CARDS</h1>';
   outputHTML += indCards.overviewCard();
   outputHTML += indCards.linkedInCard();
   outputHTML += indCards.additionalExperienceCard();
   outputHTML += indCards.openPositionCard();
   outputHTML += indCards.submittedAppCard();
   
-  outputHTML += '<p>ORG CARDS</p>';
+  outputHTML += '<h1>ORG CARDS</h1>';
   outputHTML += orgCards.overviewCard();
   outputHTML += orgCards.openPositionCard();
   outputHTML += orgCards.applicationsCard();
