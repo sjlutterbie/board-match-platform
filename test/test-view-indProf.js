@@ -15,15 +15,15 @@ const domBody = new JSDOM(
 
 
 // Load the view module
-const indProfileView = require('../client/views/individualProfile');
+const indProfileView = require('../client/views/indProfile');
 
 describe('Individual Profile View', function() {
-  
+
   // Test the primary view function
-  describe('indProfile.buildView()', function() {
+  describe('buildView()', function() {
     
-    it('Should exist', function(){
-      expect(indProfileView.buildView).to.not.be.undefined;
+    it('Should be a function', function(){
+      expect(indProfileView.buildView).to.be.a('function');
     });
     
     // Generate the view
@@ -33,24 +33,45 @@ describe('Individual Profile View', function() {
       expect(indProfViewContent).to.be.a('string');
     });
     
+    // Test the HTML the module injects
+    describe('indProfileView HTML structure', function() {
+  
+      it('Should inject the ouput', function() {
+        // Insert the HTML
+        domBody.innerHTML = indProfileView.buildView();
+        // Test  
+        expect(domBody.innerHTML)
+          .to.equal(indProfileView.buildView());
+        // Reset the DOM
+        domBody.innerHTML = '';
+      });
+    });
   });
   
-  // Test the HTML the module injects
-  describe('indProfileView HTML structure', function() {
+  // Test the buildOverview() function
+  describe('buildOverviewCard()', function() {
     
-    // Initiate a clean DOM
-    const _domBody = domBody;
+    it('Should exist', function() {
+      expect(indProfileView.buildOverviewCard).to.be.a('function');
+    });
     
-    // Insert the HTML
-    _domBody.innerHTML = indProfileView.buildView();
+    // Generate the card
+    const overviewCard = indProfileView.buildOverviewCard();
     
-    it('Should inject the ouput', function() {
-      expect(_domBody.innerHTML)
-        .to.equal(indProfileView.buildView());
+    it('Should return a string', function() {
+      expect(overviewCard).to.be.a('string');
+    });
+  });
+  
+  // Test the buildLinkedInCard() function
+  describe('buildLinkedInCard()', function() {
+    
+    it('Should be a function', function() {
+      expect(indProfileView.buildLinkedInCard).to.be.a('function');
     });
     
   });
   
-
-
+  
 });
+
