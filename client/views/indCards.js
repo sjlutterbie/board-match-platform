@@ -5,7 +5,7 @@
 
 const {buildCard} = require('./components');
 
-function overviewCard() {
+function overviewCard(sessionData) {
 
   let outputHTML = `
     <h2>Overview</h2>
@@ -16,6 +16,8 @@ function overviewCard() {
   `.trim();
 
   outputHTML = buildCard(outputHTML);
+
+  console.log(sessionData);
 
   return outputHTML;
   

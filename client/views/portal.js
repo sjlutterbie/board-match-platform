@@ -5,7 +5,11 @@ const headerMenuView = require('./headerMenu');
 const tabBarMenuView = require('./tabBarMenu');
 const indProfView = require('./indProfile');
 
-function buildView() {
+const { buildSessionData } = require('../../server/mockData');
+
+const sessionData = buildSessionData();
+
+function buildView(sessionData) {
   
   const viewHTML = `
   <!DOCTYPE html>
@@ -42,7 +46,7 @@ function buildView() {
         </nav>
         
         <main role="main">
-          ${indProfView.buildView()}
+          ${indProfView.buildView(sessionData)}
         </main>
     
         <!-- Load jQuery -->

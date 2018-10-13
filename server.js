@@ -8,16 +8,21 @@ const { PORT } = require('./config');
 const portalView = require('./client/views/portal');
 const { buildSessionData } = require('./server/mockData');
 
-app.use(express.static('client/public'));
 
+// DEV CODE - LOAD LOCALLY-GENERATED SESSION DATA
+const sessionData = buildSessionData();
+
+
+
+app.use(express.static('client/public'));
 
 app.all("/portal", (req, res) => {
   
-  res.send(portalView.buildView());
+  res.send(portalView.buildView(sessionData));
 });
 
 app.get('/mockData', (req, res) => {
-  res.send(buildSessionData());
+  res.send(sessionData);
 });
 
 

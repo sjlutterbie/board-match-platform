@@ -316,8 +316,6 @@ function buildSessionData() {
   
 }
 
-
-
 // Module exports
 
 module.exports = {
