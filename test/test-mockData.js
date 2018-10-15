@@ -10,7 +10,7 @@ const chai = require('chai');
 // Simplify expect functions
 const expect = chai.expect;
 
-const mockData = require('../server/mockData');
+const mockData = require('../client/public/js/mockData');
 
 // USER ACCOUNT
 
