@@ -17,8 +17,6 @@ function overviewCard(sessionData) {
 
   outputHTML = buildCard(outputHTML);
 
-  console.log(sessionData);
-
   return outputHTML;
   
 }
