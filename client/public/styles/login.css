@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0px;
+  height: 100%;
+  background: #fff;
+}
+
+body {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: space-around;
+  flex-grow: 0;
+  height: 80%;
+    max-height: 400px;
+  width: 80%;
+    max-width: 300px;
+}
+
+.dev-notice {
+  text-align: center;
+  font-style: italic;
+}
