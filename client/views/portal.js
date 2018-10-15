@@ -5,10 +5,6 @@ const headerMenuView = require('./headerMenu');
 const tabBarMenuView = require('./tabBarMenu');
 const indProfView = require('./indProfile');
 
-const { buildSessionData } = require('../../client/public/js/mockData');
-
-const sessionData = buildSessionData();
-
 function buildView(sessionData) {
   
   const viewHTML = `
