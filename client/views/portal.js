@@ -5,10 +5,12 @@ const headerMenuView = require('./headerMenu');
 const tabBarMenuView = require('./tabBarMenu');
 const indProfView = require('./indProfile');
 
-// Load mockAPI
-const mockAPI = require('../../server/mockAPI');
+// Load necessary API components
+const { userAccounts } = require('../../server/mockAPI');
 
-function buildView(sessionData) {
+const userAccount = userAccounts.GETOne('TESTER');
+
+function buildView() {
   
   const viewHTML = `
   <!DOCTYPE html>
@@ -45,7 +47,7 @@ function buildView(sessionData) {
         </nav>
         
         <main role="main">
-          ${indProfView.buildView(sessionData)}
+          ${indProfView.buildView(userAccount)}
         </main>
     
         <!-- Load jQuery -->
@@ -60,5 +62,6 @@ function buildView(sessionData) {
 }
 
 module.exports = {
+  userAccount,
   buildView
 };

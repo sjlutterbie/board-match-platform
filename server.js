@@ -11,11 +11,12 @@ app.use(express.static('client/public'));
 
 app.all("/portal", (req, res) => {
   
-  res.send(portalView.buildView(sessionData));
+  res.send(portalView.buildView());
 });
 
 app.get('/mockData', (req, res) => {
-  res.send(sessionData);
+  const { buildSessionData } = require('./server/mockData');
+  res.send(buildSessionData());
 });
 
 

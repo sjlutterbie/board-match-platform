@@ -104,7 +104,10 @@ describe('Individual profile creation', function() {
     });
     it('Each element should have the correct structure', function() {
       expect(indProfile.id).to.be.a('string');
-      expect(indProfile.overview).to.be.a('string');
+      expect(indProfile.overview).to.be.a('object');
+        expect(indProfile.overview.firstName).to.be.a('string');
+        expect(indProfile.overview.lastName).to.be.a('string');
+        expect(indProfile.overview.summary).to.be.a('string');
       expect(indProfile.linkedIn).to.be.a('string');
       expect(indProfile.experience).to.be.a('array');
         // IF experience elements exist, confirm they have the right keys

@@ -3,14 +3,20 @@
 //NOTE: These are rapid, static prototypes, and have not yet received test
 //  test coverage.
 
+// Load the mockAPI module
+const { indProfiles } = require('../../server/mockAPI');
+
 const {buildCard} = require('./components');
 
-function overviewCard(sessionData) {
+function overviewCard(profID) {
+  
+  // Get individual  profile
+  const indProf = indProfiles.GETOne(profID);
 
   let outputHTML = `
     <h2>Overview</h2>
-    <h3>firstName lastName</h3>
-    <p>Summary</p>
+    <h3>${indProf.overview.firstName} ${indProf.overview.lastName}</h3>
+    <p>${indProf.overview.summary}</p>
     <p><a href="#">email</a> | <a href="#">phone</a></p>
     <button>Edit</button>
   `.trim();

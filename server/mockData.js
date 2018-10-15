@@ -29,7 +29,11 @@ function createIndProfile(userAccountId) {
  
  const indProfile = {
    id: faker.random.uuid(),
-   overview: faker.lorem.paragraph(),
+   overview: {
+     firstName: faker.name.firstName(),
+     lastName: faker.name.lastName(),
+     summary: faker.lorem.paragraph()
+    },
    linkedIn: faker.internet.url(),
    experience: [],
    relations: {
