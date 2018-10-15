@@ -8,10 +8,10 @@ const { indProfiles } = require('../../server/mockAPI');
 
 const {buildCard} = require('./components');
 
-function overviewCard(profID) {
+function overviewCard(profId) {
   
   // Get individual  profile
-  const indProf = indProfiles.GETOne(profID);
+  const indProf = indProfiles.GETOne(profId);
 
   let outputHTML = `
     <h2>Overview</h2>
@@ -28,11 +28,14 @@ function overviewCard(profID) {
   
 }
 
-function linkedInCard() {
+function linkedInCard(profId) {
+  
+  const indProf = indProfiles.GETOne(profId);
   
   let outputHTML = `
   <h2>LinkedIn</h2>
-  <h3>URL</h3>
+  <h3><a href="${indProf.linkedIn} title="LinkedIn: ${indProf.overview.firstName} 
+    ${indProf.overview.lastName}">${indProf.linkedIn}</a></h3>
   <button>Edit</button>
   `.trim();
   
