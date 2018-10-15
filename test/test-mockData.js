@@ -108,6 +108,8 @@ describe('Individual profile creation', function() {
         expect(indProfile.overview.firstName).to.be.a('string');
         expect(indProfile.overview.lastName).to.be.a('string');
         expect(indProfile.overview.summary).to.be.a('string');
+        expect(indProfile.overview.email).to.be.a('string');
+        expect(indProfile.overview.phone).to.be.a('string');
       expect(indProfile.linkedIn).to.be.a('string');
       expect(indProfile.experience).to.be.a('array');
         // IF experience elements exist, confirm they have the right keys

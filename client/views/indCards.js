@@ -17,7 +17,8 @@ function overviewCard(profID) {
     <h2>Overview</h2>
     <h3>${indProf.overview.firstName} ${indProf.overview.lastName}</h3>
     <p>${indProf.overview.summary}</p>
-    <p><a href="#">email</a> | <a href="#">phone</a></p>
+    <p><a href="mailto:${indProf.overview.email}">${indProf.overview.email}</a>
+      | <a href="tel:${indProf.overview.phone}">${indProf.overview.phone}</a></p>
     <button>Edit</button>
   `.trim();
 

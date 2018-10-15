@@ -32,7 +32,9 @@ function createIndProfile(userAccountId) {
    overview: {
      firstName: faker.name.firstName(),
      lastName: faker.name.lastName(),
-     summary: faker.lorem.paragraph()
+     summary: faker.lorem.paragraph(),
+     phone: faker.phone.phoneNumber(),
+     email: faker.internet.email()
     },
    linkedIn: faker.internet.url(),
    experience: [],
