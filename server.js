@@ -12,8 +12,6 @@ const { buildSessionData } = require('./server/mockData');
 // DEV CODE - LOAD LOCALLY-GENERATED SESSION DATA
 const sessionData = buildSessionData();
 
-
-
 app.use(express.static('client/public'));
 
 app.all("/portal", (req, res) => {
