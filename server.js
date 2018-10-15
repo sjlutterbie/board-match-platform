@@ -6,11 +6,6 @@ const app = express();
 const { PORT } = require('./config');
 
 const portalView = require('./client/views/portal');
-const { buildSessionData } = require('./client/public/js/mockData');
-
-
-// DEV CODE - LOAD LOCALLY-GENERATED SESSION DATA
-const sessionData = buildSessionData();
 
 app.use(express.static('client/public'));
 

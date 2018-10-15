@@ -5,6 +5,9 @@ const headerMenuView = require('./headerMenu');
 const tabBarMenuView = require('./tabBarMenu');
 const indProfView = require('./indProfile');
 
+// Load mockAPI
+const mockAPI = require('../../server/mockAPI');
+
 function buildView(sessionData) {
   
   const viewHTML = `

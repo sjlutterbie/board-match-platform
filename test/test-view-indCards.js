@@ -14,7 +14,7 @@ const domBody = new JSDOM(
   .querySelector('body');
   
 // Load sessionData instance
-const mockData = require('../client/public/js/mockData');
+const mockData = require('../server/mockData');
 
 const sessionData = mockData.buildSessionData();
 

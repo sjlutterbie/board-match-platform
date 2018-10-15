@@ -10,7 +10,7 @@ const chai = require('chai');
 // Simplify expect functions
 const expect = chai.expect;
 
-const mockData = require('../client/public/js/mockData');
+const mockData = require('../server/mockData');
 
 // USER ACCOUNT
 
@@ -300,7 +300,7 @@ describe("sessionData builder", function() {
   // Build a sessionData object
   const sessionData = mockData.buildSessionData();
   const dataTypes = ['userAccounts', 'indProfiles', 'orgProfiles', 
-                     'positions', 'applications'];
+                     'positions', 'applications', 'userID'];
   
   describe('The sessionData object', function() {
     it('Should include the correct elements', function() {

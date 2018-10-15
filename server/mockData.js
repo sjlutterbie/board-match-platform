@@ -173,7 +173,7 @@ function buildSessionData() {
     orgProfiles: [],
     positions: [],
     applications: [],
-    userID: 'TESTER'
+    userID: ['TESTER']
   };
   
   // Generate 10 user accounts
