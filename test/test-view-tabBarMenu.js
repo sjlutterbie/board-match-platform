@@ -15,46 +15,37 @@ const domBody = new JSDOM(
 const expect = chai.expect;
 
 //Load the module
-const sideBarMenuView = require('../client/views/tabBarMenu');
+const tabBar = require('../client/views/tabBarMenu');
 
-describe('SideBarMenu View', function() {
+describe('tabBar Menu View', function() {
   
   // Test the primary view function
-  describe('sideBarMenu.buildView()', function() {
+  describe('tabBar.buildView()', function() {
     
     it('Should exist', function() {
-      expect(sideBarMenuView.buildView).to.not.be.undefined;
+      expect(tabBar.buildView).to.not.be.undefined;
     });
 
     // Generate the view    
-    const sideBarMenuViewContent = sideBarMenuView.buildView();
+    const tabBarViewContent = tabBar.buildView();
     
     it('Should return a string', function() {
-      expect(sideBarMenuViewContent).to.be.a('string');
+      expect(tabBarViewContent).to.be.a('string');
     });
     
   });
   
   // Test the HTML the module injects
-  describe('sideBarMenu HTML View structure', function() {
+  describe('tabBarMenu HTML View structure', function() {
     
-    // Initiate a clean DOM
-    const _domBody = domBody;
-    
-    // Insert the HTML
-    _domBody.innerHTML = sideBarMenuView.buildView();
-    
-    it('Should inject the ouput', function() {
-      expect(_domBody.innerHTML)
-        .to.equal(sideBarMenuView.buildView());
+    it('Should inject the output', function() {
+      // Insert the HTML
+      domBody.innerHTML = tabBar.buildView();
+      // Test
+      expect(domBody.innerHTML).to.equal(tabBar.buildView());
+      // Reset the test DOM
+      domBody.innerHTML = '';
     });
-    
-    // TEMPORARY DEVELOPMENT TEST
-    it('Should inject a single <p> element', function() {
-      expect(_domBody.children.length).to.equal(1);
-      expect(_domBody.children[0].tagName).to.equal('P');
-    });
-
     
   });
   

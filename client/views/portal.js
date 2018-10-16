@@ -1,5 +1,9 @@
 'use strict';
 
+// This 
+
+
+
 // Load required views
 const headerMenuView = require('./headerMenu');
 const tabBarMenuView = require('./tabBarMenu');

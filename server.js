@@ -9,10 +9,14 @@ const portalView = require('./client/views/portal');
 
 app.use(express.static('client/public'));
 
+// TODO: Implement JWT authentication middleware
+
 app.all("/portal", (req, res) => {
-  
   res.send(portalView.buildView());
 });
+
+// TODO: Replace /portal route with /portal:userid route, which 
+//  loads the data for a specific user (in DEV, it will be 'TESTER').
 
 app.get('/mockData', (req, res) => {
   const { buildSessionData } = require('./server/mockData');
