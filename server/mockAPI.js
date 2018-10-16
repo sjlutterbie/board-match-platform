@@ -37,7 +37,7 @@ const indProfiles = {
   }
 };
 
-// orgProfiles
+// openPositions
 const openPositions = {
   data: sessionData.positions,
   GET: function() {

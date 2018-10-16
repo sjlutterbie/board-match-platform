@@ -12,7 +12,7 @@ function overviewCard() {
     <h3>orgName</h3>
     <p>Summary</p>
     <p><a href="#">email</a> | <a href="#">phone</a></p>
-    <button>Edit</button>
+    <button>Edit (inactive)</button>
     `.trim();
  
  outputHTML = buildCard(outputHTML);
@@ -26,8 +26,8 @@ function openPositionCard() {
   <h2>Organization</h2>
   <h3>Title</h3>
   <p>Summary</p>
-  <button>Edit</button>
-  <button>View Applications</button>
+  <button>Edit (inactive)</button>
+  <button>View Applications (inactive)</button>
   `.trim();
   
   outputHTML = buildCard(outputHTML);

@@ -19,7 +19,7 @@ function overviewCard(profId) {
     <p>${indProf.overview.summary}</p>
     <p><a href="mailto:${indProf.overview.email}">${indProf.overview.email}</a>
       | <a href="tel:${indProf.overview.phone}">${indProf.overview.phone}</a></p>
-    <button>Edit</button>
+    <button>Edit (inactive)</button>
   `.trim();
 
   outputHTML = buildCard(outputHTML);
@@ -36,7 +36,7 @@ function linkedInCard(profId) {
   <h2>LinkedIn</h2>
   <h3><a href="${indProf.linkedIn}" title="LinkedIn: ${indProf.overview.firstName} 
     ${indProf.overview.lastName}">${indProf.linkedIn}</a></h3>
-  <button>Edit</button>
+  <button>Edit (inactive)</button>
   `.trim();
   
   outputHTML = buildCard(outputHTML);
@@ -72,23 +72,7 @@ function additionalExperienceCard() {
 
   <p>Organization (startDate - endDate)</p>
   <p>Description</p>
-  <button>Edit</button>
-  `.trim();
-  
-  
-  outputHTML = buildCard(outputHTML);
-  return outputHTML;
-  
-}
-
-
-function openPositionCard() {
-  
-  let outputHTML = `
-  <h2>Organization</h2>
-  <h3>title</h3>
-  <p>Summary...</p>
-  <button>View more / Apply</button>
+  <button>Edit (inactive)</button>
   `.trim();
   
   
@@ -105,7 +89,7 @@ function submittedAppCard() {
   <p>Summary...</p>
   <h3>Your message</h3>
   <p>Message...</p>
-  <button>Show less</button>
+  <button>Show less (inactive)</button>
   `.trim();
   
   outputHTML = buildCard(outputHTML);
@@ -120,6 +104,5 @@ module.exports = {
   overviewCard,
   linkedInCard,
   additionalExperienceCard,
-  openPositionCard,
   submittedAppCard
 };
