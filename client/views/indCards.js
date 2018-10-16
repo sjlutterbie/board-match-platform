@@ -1,6 +1,6 @@
 'use strict';
 
-//NOTE: These are rapid, static prototypes, and have not yet received test
+//NOTE: Many of these are rapid, static prototypes, and have not yet received test
 //  test coverage.
 
 // Load the mockAPI module

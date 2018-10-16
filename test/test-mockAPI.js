@@ -66,7 +66,7 @@ describe('mockAPI', function() {
   
   describe('indProfiles model', function() {
     
-    it('indProfiles be an object', function() {
+    it('indProfiles should be an object', function() {
       expect(mAPI.indProfiles).to.be.a('object');
     });
     it('indProfiles.data should be an array', function() {
@@ -97,6 +97,80 @@ describe('mockAPI', function() {
       });
       it('The returned object should have id === profID', function() {
         expect(mAPI.indProfiles.GETOne(profID).id).to.equal(profID);
+      });
+    });
+    
+  });
+  
+  // OPEN POSITIONS
+  
+  describe('openPositions model', function() {
+    
+    it('openPositions should be an object', function() {
+      expect(mAPI.openPositions).to.be.a('object');
+    });
+    it('openPositions.data should be an array', function() {
+      expect(mAPI.openPositions.data).to.be.a('array');
+    });
+    
+    // Load first openPositions id for testing purposes
+    const posId = mAPI.openPositions.data[0].id;
+    
+    describe('openPositions.GET', function() {
+      it('Should be a function', function() {
+        expect(mAPI.openPositions.GET).to.be.a('function');
+      });
+      it('Should return an array', function() {
+        expect(mAPI.openPositions.GET()).to.be.a('array');
+      });
+    });
+    
+    describe('openPositions.GETOne', function() {
+      it('Should be a function', function() {
+        expect(mAPI.openPositions.GETOne).to.be.a('function');
+      });
+      it('Should return an object', function() {
+        expect(mAPI.openPositions.GETOne(posId)).to.be.a('object');
+      });
+      it('The returned object should have id === posId', function() {
+        expect(mAPI.openPositions.GETOne(posId).id).to.equal(posId);
+      });
+    });
+    
+  });
+  
+  // APPLICATIONS
+  
+  describe('applications model', function() {
+    
+    it('applications should be an object', function() {
+      expect(mAPI.applications).to.be.a('object');
+    });
+    it('applications.data should be an array', function() {
+      expect(mAPI.applications.data).to.be.a('array');
+    });
+    
+    // Load first application for testing purposes
+    const appId = mAPI.applications.data[0].id;
+    
+    describe('applications.GET', function() {
+      it('Should be a function', function() {
+        expect(mAPI.applications.GET).to.be.a('function');
+      });
+      it('Should return an array', function() {
+        expect(mAPI.applications.GET()).to.be.a('array');
+      });
+    });
+    
+    describe('applications.GETOne', function() {
+      it('Should be a function', function(){
+        expect(mAPI.applications.GETOne).to.be.a('function');
+      });
+      it('Should return an object', function() {
+        expect(mAPI.applications.GETOne(appId)).to.be.a('object');
+      });
+      it('The returned object should have id === appId', function() {
+        expect(mAPI.applications.GETOne(appId).id).to.equal(appId);
       });
     });
     
