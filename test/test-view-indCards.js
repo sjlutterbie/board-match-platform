@@ -12,18 +12,12 @@ const { JSDOM } = jsdom;
 const domBody = new JSDOM(
   '<!DOCTYPE html><html><body></body></html>').window.document
   .querySelector('body');
-  
-// Load sessionData instance
-const mockData = require('../server/mockData');
-
-const sessionData = mockData.buildSessionData();
-
-// Load first indProfile in dataset for testing purposes.
-const profId = sessionData.indProfiles[0].id;
 
 // Load required module  
 const indCards = require('../client/views/indCards');
+const mAPI = require('../server/mockAPI');
 
+const profId = mAPI.sessionData.indProfiles[0].id;
 
 describe('Individual Profile Cards', function() {
   
@@ -34,6 +28,15 @@ describe('Individual Profile Cards', function() {
     it('Should return a string', function() {
       expect(indCards.overviewCard(profId)).to.be.a('string');
     });
+    it('Should inject the HTML correctly', function() {
+      // Insert the HTML
+      domBody.innerHTML = indCards.overviewCard(profId);
+      // Test
+      expect(domBody.innerHTML).to.equal(indCards.overviewCard(profId));
+      // Reset test DOM
+      domBody.innerHTML = '';
+      
+    });
   });
   
   describe('linekdInCard()', function() {
@@ -42,6 +45,14 @@ describe('Individual Profile Cards', function() {
     });
     it('Should return a string', function() {
       expect(indCards.linkedInCard(profId)).to.be.a('string');
+    });
+    it('Should inject the HTML correctly', function() {
+      // Inject HTML
+      domBody.innerHTML = indCards.linkedInCard(profId);
+      // Test
+      expect(domBody.innerHTML).to.equal(indCards.linkedInCard(profId));
+      // Reset test DOM
+      domBody.innerHTML = '';
     });
   });
 

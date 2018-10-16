@@ -34,7 +34,7 @@ function linkedInCard(profId) {
   
   let outputHTML = `
   <h2>LinkedIn</h2>
-  <h3><a href="${indProf.linkedIn} title="LinkedIn: ${indProf.overview.firstName} 
+  <h3><a href="${indProf.linkedIn}" title="LinkedIn: ${indProf.overview.firstName} 
     ${indProf.overview.lastName}">${indProf.linkedIn}</a></h3>
   <button>Edit</button>
   `.trim();
