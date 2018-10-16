@@ -3,31 +3,39 @@
 //NOTE: These are rapid, static prototypes, and have not yet received test
 //  test coverage.
 
+// Load the mockAPI module
+const { indProfiles } = require('../../server/mockAPI');
+
 const {buildCard} = require('./components');
 
-function overviewCard(sessionData) {
+function overviewCard(profId) {
+  
+  // Get individual  profile
+  const indProf = indProfiles.GETOne(profId);
 
   let outputHTML = `
     <h2>Overview</h2>
-    <h3>firstName lastName</h3>
-    <p>Summary</p>
-    <p><a href="#">email</a> | <a href="#">phone</a></p>
+    <h3>${indProf.overview.firstName} ${indProf.overview.lastName}</h3>
+    <p>${indProf.overview.summary}</p>
+    <p><a href="mailto:${indProf.overview.email}">${indProf.overview.email}</a>
+      | <a href="tel:${indProf.overview.phone}">${indProf.overview.phone}</a></p>
     <button>Edit</button>
   `.trim();
 
   outputHTML = buildCard(outputHTML);
 
-  console.log(sessionData);
-
   return outputHTML;
   
 }
 
-function linkedInCard() {
+function linkedInCard(profId) {
+  
+  const indProf = indProfiles.GETOne(profId);
   
   let outputHTML = `
   <h2>LinkedIn</h2>
-  <h3>URL</h3>
+  <h3><a href="${indProf.linkedIn}" title="LinkedIn: ${indProf.overview.firstName} 
+    ${indProf.overview.lastName}">${indProf.linkedIn}</a></h3>
   <button>Edit</button>
   `.trim();
   

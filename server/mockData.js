@@ -29,7 +29,13 @@ function createIndProfile(userAccountId) {
  
  const indProfile = {
    id: faker.random.uuid(),
-   overview: faker.lorem.paragraph(),
+   overview: {
+     firstName: faker.name.firstName(),
+     lastName: faker.name.lastName(),
+     summary: faker.lorem.paragraph(),
+     phone: faker.phone.phoneNumber(),
+     email: faker.internet.email()
+    },
    linkedIn: faker.internet.url(),
    experience: [],
    relations: {
@@ -172,7 +178,8 @@ function buildSessionData() {
     indProfiles: [],
     orgProfiles: [],
     positions: [],
-    applications: []
+    applications: [],
+    userID: ['TESTER']
   };
   
   // Generate 10 user accounts

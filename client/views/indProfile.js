@@ -3,16 +3,16 @@
 const indCards = require('./indCards');
 const orgCards = require('./orgCards');
 
-function buildView(sessionData) {
+function buildView(userAccount) {
   
   // Initialize blank content
   let outputHTML = '';
   
   // Add Ind Cards
   outputHTML += '<h1>INDIVIDUAL CARDS</h1>';
-  outputHTML += indCards.overviewCard(sessionData);
-  outputHTML += indCards.linkedInCard();
-  outputHTML += indCards.additionalExperienceCard();
+  outputHTML += indCards.overviewCard(userAccount.relations.indProfile);
+  outputHTML += indCards.linkedInCard(userAccount.relations.indProfile);
+  // outputHTML += indCards.additionalExperienceCard();
   outputHTML += indCards.openPositionCard();
   outputHTML += indCards.submittedAppCard();
   

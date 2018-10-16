@@ -19,6 +19,17 @@ const portalView = require('../client/views/portal');
 
 describe('Portal View', function() {
   
+  // Test it's loading a valid userAccount
+  describe('portalView.userAccount', function() {
+    it('Should be an object', function() {
+      expect(portalView.userAccount).to.be.a('object');
+    });
+    it('Should have the required keys', function() {
+      const requiredKeys = ['id', 'email', 'password', 'relations'];
+      expect(portalView.userAccount).to.have.keys(requiredKeys);
+    });
+  });
+  
   // Test the primary function
   describe('portalView.buildView()', function() {
     

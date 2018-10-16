@@ -6,21 +6,17 @@ const app = express();
 const { PORT } = require('./config');
 
 const portalView = require('./client/views/portal');
-const { buildSessionData } = require('./client/public/js/mockData');
-
-
-// DEV CODE - LOAD LOCALLY-GENERATED SESSION DATA
-const sessionData = buildSessionData();
 
 app.use(express.static('client/public'));
 
 app.all("/portal", (req, res) => {
   
-  res.send(portalView.buildView(sessionData));
+  res.send(portalView.buildView());
 });
 
 app.get('/mockData', (req, res) => {
-  res.send(sessionData);
+  const { buildSessionData } = require('./server/mockData');
+  res.send(buildSessionData());
 });
 
 
@@ -35,7 +31,7 @@ let server;
 function runServer(port = PORT) {
   return new Promise((resolve, reject) => {
     server = app.listen(port, () => {
-      console.log(`YOur app is listening on port ${port}`);
+      console.log(`Your app is listening on port ${port}`);
       resolve();
     })
     .on('error', err => {

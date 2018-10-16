@@ -13,9 +13,10 @@ const domBody = new JSDOM(
       '<!DOCTYPE html><html><body></body></html>').window.document
       .querySelector('body');
 
-
 // Load the view module
 const indProfileView = require('../client/views/indProfile');
+const mAPI = require('../server/mockAPI');
+const userAccount = mAPI.sessionData.userAccounts[0];
 
 describe('Individual Profile View', function() {
 
@@ -27,7 +28,7 @@ describe('Individual Profile View', function() {
     });
     
     // Generate the view
-    const indProfViewContent = indProfileView.buildView();
+    const indProfViewContent = indProfileView.buildView(userAccount);
     
     it('Should return a string', function() {
       expect(indProfViewContent).to.be.a('string');
@@ -38,10 +39,10 @@ describe('Individual Profile View', function() {
   
       it('Should inject the ouput', function() {
         // Insert the HTML
-        domBody.innerHTML = indProfileView.buildView();
+        domBody.innerHTML = indProfileView.buildView(userAccount);
         // Test  
         expect(domBody.innerHTML)
-          .to.equal(indProfileView.buildView());
+          .to.equal(indProfileView.buildView(userAccount));
         // Reset the DOM
         domBody.innerHTML = '';
       });
