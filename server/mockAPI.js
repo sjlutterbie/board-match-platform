@@ -30,30 +30,46 @@ const indProfiles = {
   GET: function() {
     return indProfiles.data;
   },
-  GETOne: function(profID) {
+  GETOne: function(profId) {
     return indProfiles.data.find( function(profile) {
-      return profile.id === profID;
+      return profile.id === profId;
     });
   }
 };
 
 // orgProfiles
-  // Extract all objects from sessionData
-  // GET a specific element
-
-// positions
-  // Extract all objects from sessionData
-  // GET a specific element
-
-// applications
-  // Extract all objects from sessionData
-  // GET a specific element
+const openPositions = {
+  data: sessionData.positions,
+  GET: function() {
+    return openPositions.data;
+  },
+  GETOne: function(posId) {
+    return openPositions.data.find( function(position) {
+      return position.id === posId;
+    });
+  }
   
+};
+
+const applications = {
+  data: sessionData.applications,
+  GET: function() {
+    return applications.data;
+  },
+  GETOne: function(appId) {
+    return applications.data.find( function(app) {
+      return app.id === appId;
+    });
+  }
+};
+
   
 ////////////////////////////////////////////////////////////////////////////////
 
 module.exports = {
   sessionData,
   userAccounts,
-  indProfiles
+  indProfiles,
+  openPositions,
+  applications
 };
